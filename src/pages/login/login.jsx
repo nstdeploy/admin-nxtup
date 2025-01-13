@@ -37,7 +37,7 @@ function Login() {
         
         if (response.ok) {
             navigate('/home');
-            toast.success("Login Successfull!")
+            toast.success("Login successful!")
             localStorage.setItem("accessToken",body.token)
             console.log(body.token)
       } else {
