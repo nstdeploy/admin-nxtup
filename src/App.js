@@ -2,8 +2,8 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import login from "./pages/login/login";
 import AddEvents from "./pages/add-events/events";
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 import AddForm from "./pages/add-form/form";
 import Home from "./pages/home/home";
 
@@ -17,9 +17,10 @@ function App() {
               <Route path="addForm" Component={AddForm} />
               <Route path="home" Component={Home}/>
               <Route></Route>
+              <Route></Route>
             </Routes>
           </BrowserRouter>
-          <ToastContainer/>
+          <ToastContainer  theme="dark"/>
       </div>
   );
 }
