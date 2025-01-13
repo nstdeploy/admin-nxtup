@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastify";
 import AddForm from "./pages/add-form/form";
 import Home from "./pages/home/home";
 import Archived from "./pages/Archived/ArchivedEvents";
+import ManageEvents from "./pages/manage-events/manage-events";
 
 function App() {
   return (
@@ -17,7 +18,8 @@ function App() {
               <Route path="/addevents" element={<AddEvents />}/>
               <Route path="addForm" Component={AddForm} />
               <Route path="home" Component={Home}/>
-              <Route path="archived" Component={Archived}/>              
+              <Route path="archived" Component={Archived}/> 
+              <Route path="events" Component={ManageEvents}/>             
             </Routes>
           </BrowserRouter>
           <ToastContainer  theme="dark"/>
