@@ -1,4 +1,18 @@
+import { useNavigate} from "react-router-dom"
+import { useEffect } from "react"
+
 function Archived() {
+    const accessToken = localStorage.getItem('accessToken')
+    const navigate = useNavigate()
+
+
+    useEffect(() => {
+
+        if (!accessToken) {
+            navigate('/login')
+        }
+    }, [])
+
     const eventData = [
         {
             "title": "NST Hackathon",

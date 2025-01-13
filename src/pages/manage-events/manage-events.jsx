@@ -1,4 +1,20 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 function ManageEvents() {
+
+    const accessToken = localStorage.getItem('accessToken')
+        const navigate = useNavigate()
+    
+    
+        useEffect(() => {
+    
+            if (!accessToken) {
+                navigate('/login')
+            }
+        }, [])
+
+
     const eventData = [
         {
             "title": "NST Hackathon",

@@ -13,7 +13,7 @@ function Home() {
         if (!accessToken) {
             navigate('/login')
         }
-    }, [accessToken])
+    }, [])
 
     const ButtonArr = [
         { idx: "Add New-Event", send: "addevents" }, { idx: "Manage Event", send: "" }, { idx: "Archived Events", send: "archived" }]
