@@ -1,6 +1,7 @@
 import { toast } from "react-toastify"
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Nav from "../../components/nav";
 
 function Login() {
 
@@ -9,8 +10,7 @@ function Login() {
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
-        email: "",
-        pass: ""
+        
       });
     
     
@@ -25,7 +25,7 @@ function Login() {
         e.preventDefault();
 
         try {
-        const response = await fetch("", {
+        const response = await fetch("https://9b04-115-244-141-202.ngrok-free.app/login", {
             method: "POST",
             headers: {
             "Content-Type": "application/json",
@@ -33,10 +33,13 @@ function Login() {
             body: JSON.stringify(formData),
         });
 
+        const body = await response.json()
+        
         if (response.ok) {
             navigate('/home');
             toast.success("Login Successfull!")
-            console.log(response.data)
+            localStorage.setItem("accessToken",body.token)
+            console.log(body.token)
       } else {
             toast.error("There seems to be some error !")
         }
@@ -48,10 +51,8 @@ function Login() {
 
     return(
     <div className="bg-black text-white">
-        <div className="h-16 flex items-center justify-start ml-2">
-            <img src="assets/nXTUP.svg" alt="Logo" className="scale-75"/>
-        </div>
-
+        
+        <Nav/>
         <div className="flex items-center justify-center scale-80 pt-16 pb-12">
             <img src="assets/nst.svg" alt="NST"/>
             <h1 className="text-3xl font-extrabold ml-5 mr-5 rotate-45">+</h1>
@@ -66,13 +67,13 @@ function Login() {
                             placeholder="Enter your email" 
                             type="text"
                             htmlFor="email"
-                            className="h-10 w-[300px] rounded-l-md text-black p-3 bg-white"
+                            className="h-10 w-[450px] rounded-l-md text-black p-3 bg-white"
                             onChange={handleChange}
                             required
                             value={formData.email}
-                            name="email"
+                            name="Email"
                         />
-                        <span className="flex items-center bg-white rounded-r-md pr-3 text-gray-600 font-extrabold">@newtonschool.co</span>
+                        
                     </div>
                 </div>
                 <div className="flex flex-col mb-4">
@@ -81,22 +82,22 @@ function Login() {
                         placeholder="Enter your password"
                         type="password"
                         htmlFor="password"
-                        className="h-10 w-[465px] rounded-md text-black p-3"
+                        className="h-10 w-[450px] rounded-md text-black p-3"
                         onChange={handleChange}
                         required
                         value={formData.pass}
-                        name="pass"
+                        name="Password"
                     />
                 </div>
                 <div className="mb-10 ml-[50%]">
                     <span onClick={ForgotPass} className="cursor-pointer">Forgot Password?</span>
                 </div>
-                <div className="mb-10 mt-5 bg-zinc-600 h-[40px] w-[400px] flex items-center justify-center rounded-xl cursor-pointer">
+                
                     <button
                         type="submit"
-                        className="cursor-pointer">Submit
+                        className="mb-10 mt-5 bg-zinc-600 h-[40px] w-[400px] flex items-center justify-center rounded-xl cursor-pointer">Submit
                     </button>
-                </div>
+                
             </form>
         </div>
     </div>

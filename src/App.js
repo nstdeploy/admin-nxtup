@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import AddForm from "./pages/add-form/form";
 import Home from "./pages/home/home";
+import Archived from "./pages/Archived/ArchivedEvents";
 
 function App() {
   return (
@@ -16,8 +17,7 @@ function App() {
               <Route path="/addevents" element={<AddEvents />}/>
               <Route path="addForm" Component={AddForm} />
               <Route path="home" Component={Home}/>
-              <Route></Route>
-              <Route></Route>
+              <Route path="archived" Component={Archived}/>              
             </Routes>
           </BrowserRouter>
           <ToastContainer  theme="dark"/>
