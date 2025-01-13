@@ -1,11 +1,7 @@
-
-import './App.css';
+import "./App.css";
 
 function App() {
-  return (
-    <>
-    </>
-  );
+  return <div className="bg-black"></div>;
 }
 
 export default App;
