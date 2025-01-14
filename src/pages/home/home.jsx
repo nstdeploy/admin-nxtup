@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import LoginNav from "../../components/LoginNav";
+
 
 
 function Home() {
@@ -16,7 +18,7 @@ function Home() {
     }, [])
 
     const ButtonArr = [
-        { idx: "Add New-Event", send: "addevents" }, { idx: "Manage Event", send: "" }, { idx: "Archived Events", send: "archived" }]
+        { idx: "Add New-Event", send: "addevents" }, { idx: "Manage Event", send: "events" }, { idx: "Archived Events", send: "archived" }]
 
     const LogOut = () => {
         localStorage.removeItem('accessToken')
@@ -26,14 +28,8 @@ function Home() {
 
     return (
         <div className="text-white">
-            <div className="h-16 flex items-center justify-between ml-2">
-                <img src="assets/nXTUP.svg" alt="Logo" className="scale-75" />
-                <div className="flex items-center justify-center scale-50 -mr-14">
-                    <img src="assets/nst.svg" alt="NST" />
-                    <h1 className="text-3xl font-extrabold ml-5 mr-5 rotate-45">+</h1>
-                    <img src="assets/ru.svg" alt="RU" />
-                </div>
-            </div>
+            
+            <LoginNav/>
             <div className="flex justify-end">
                 <button className="bg-zinc-500 mr-[150px] h-[40px] w-[100px] rounded-lg mt-5" onClick={LogOut}>Log-out</button>
             </div>
@@ -45,6 +41,7 @@ function Home() {
                 )
                 )}
             </div>
+            
         </div>
     )
 

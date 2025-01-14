@@ -1,5 +1,6 @@
 import { useNavigate} from "react-router-dom"
 import { useEffect } from "react"
+import LoginNav from "../../components/LoginNav"
 
 function Archived() {
     const accessToken = localStorage.getItem('accessToken')
@@ -44,14 +45,7 @@ function Archived() {
     return (
         <>
             <div className="text-white">
-                <div className="flex items-center justify-between h-16 mt-2 ml-2">
-                    <img src="assets/nXTUP.svg" alt="Logo" className="scale-75" />
-                    <div className="flex items-center justify-center mt-2 scale-50 -mr-14">
-                        <img src="assets/nst.svg" alt="NST" />
-                        <h1 className="mt-2 ml-5 mr-5 text-3xl font-extrabold rotate-45">+</h1>
-                        <img src="assets/ru.svg" alt="RU" />
-                    </div>
-                </div>
+                <LoginNav/>
                 <div className="flex items-center justify-center mt-5">
                 <div class="relative flex flex-col w-[98vw] h-full overflow-scroll text-slate-300 bg-slate-800 shadow-md rounded-lg bg-clip-border mt-6">
                     <table class="w-full text-left table-auto">

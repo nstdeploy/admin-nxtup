@@ -1,19 +1,43 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ToggleSwitch from "../../components/ToggleSwitch";
+import LoginNav from "../../components/LoginNav"
+import axios from "axios";
 
 function ManageEvents() {
 
     const accessToken = localStorage.getItem('accessToken')
-        const navigate = useNavigate()
-    
-    
-        useEffect(() => {
-    
-            if (!accessToken) {
-                navigate('/login')
-            }
-        }, [])
+    const navigate = useNavigate()
 
+
+    useEffect(() => {
+
+        if (!accessToken) {
+            navigate('/login')
+        }
+    }, [])
+
+    const [events, setEvents] = useState([]);
+
+    useEffect(() => {
+        const getEvents = async () => {
+            try {
+                const response = await axios.get('https://9b04-115-244-141-202.ngrok-free.app/api/events', { headers: { "ngrok-skip-browser-warning": "69420" } });
+                
+                const Data = response.data.data
+                setEvents(Data);
+            
+            } catch (error) {
+                console.error('Error fetching events:', error);
+            }
+        };
+
+        getEvents();
+        
+    }, []);
+
+
+    
 
     const eventData = [
         {
@@ -36,85 +60,90 @@ function ManageEvents() {
         "TeamSize",
         "Registrations",
         "Form",
-        "LiveStatus"
+        "LiveStatus",
     ]
+
 
     return (
         <>
             <div className="text-white">
-                <div className="flex items-center justify-between h-16 ml-2">
-                    <img src="assets/nXTUP.svg" alt="Logo" className="scale-75" />
-                    <div className="flex items-center justify-center scale-50 -mr-14">
-                        <img src="assets/nst.svg" alt="NST" />
-                        <h1 className="ml-5 mr-5 text-3xl font-extrabold rotate-45">+</h1>
-                        <img src="assets/ru.svg" alt="RU" />
-                    </div>
-                </div>
+                <LoginNav />
                 <div className="flex items-center justify-center mt-5">
-                <div class="relative flex flex-col w-[98vw] h-full overflow-scroll text-slate-300 bg-slate-800 shadow-md rounded-lg bg-clip-border">
-                    <table class="w-full text-left table-auto">
-                        <thead>
-                            <tr>
-                                {
-                                    EventName.map((name) => (
-                                        <th class="p-4 border-b border-slate-600 bg-slate-700">
-                                            <p class="text-sm font-normal leading-none text-slate-300 text-center">
-                                                {name}
-                                            </p>
-                                        </th>
-                                    )
-                                    )}
-                            </tr>
-                        </thead>
-                        <tbody>{
-                            eventData.map((event) => (
-                                <tr class="hover:bg-slate-700 ">
-                                    <td class="p-4 border-b border-slate-700 bg-slate-900 w-[25%]">
-                                        <p class="text-sm text-slate-100 font-semibold ">
-                                            {event.title}
-                                        </p>
-                                    </td>
-                                    <td class="p-4 border-b border-slate-700 bg-slate-800 w-[10%]">
-                                        <p class="text-sm text-slate-300  text-center">
-                                            {event.Start}
-                                        </p>
-                                    </td>
-                                    <td class="p-4 border-b border-slate-700 bg-slate-900 w-[10%]">
-                                        <p class="text-sm text-slate-300  text-center">
-                                            {event.End}
-                                        </p>
-                                    </td>
-                                    <td class="p-4 border-b border-slate-700 bg-slate-800 w-[15%]">
-                                        <p class="text-sm text-slate-300  text-center">
-                                            {event.location}
-                                        </p>
-                                    </td>
-                                    <td class="p-4 border-b border-slate-700 bg-slate-900 w-[10%]">
-                                        <p class="text-sm text-slate-300  text-center">
-                                            {event.TeamSize}
-                                        </p>
-                                    </td>
-                                    <td class="p-4 border-b border-slate-700 bg-slate-800 w-[10%]">
-                                        <p class="text-sm text-slate-300  text-center">
-                                            {event.totalRegistrations}
-                                        </p>
-                                    </td>
-                                    <td class="p-4 border border-white bg-slate-900 w-[10%]">
-                                        <p class="text-sm text-slate-300  text-center">
-                                            {event.Form}
-                                        </p>
-                                    </td>
-                                    <td class="p-4 border-b border-slate-700 bg-slate-800 w-[10%]">
-                                        <p class="text-sm text-slate-300  text-center">
-                                            {event.isActive}
-                                        </p>
-                                    </td>
+                    <div className="relative flex flex-col w-[98vw] h-full overflow-scroll text-slate-300 bg-slate-800 shadow-md rounded-lg bg-clip-border">
+                        <table className="w-full text-left table-auto">
+                            <thead>
+                                <tr>
+                                    {
+                                        EventName.map((name) => (
+                                            <th className="p-4 border-b border-slate-600 bg-slate-700">
+                                                <p className="text-sm font-normal leading-none text-slate-300 text-center">
+                                                    {name}
+                                                </p>
+                                            </th>
+                                        )
+                                        )}
                                 </tr>
-                            )
-                            )}
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody>{
+                                events.map((event) => (
+                                    <tr className="hover:bg-slate-700 ">
+                                        <td className="p-4 border-b border-slate-700 bg-slate-900 w-[25%]">
+                                            <div className="flex justify-between">
+                                                <span className="text-sm text-slate-100 font-semibold ">
+                                                    {event.Title}
+                                                </span>
+                                                <div className="flex">
+                                                    <span className="h-7 w-7 bg-white rounded-xl flex items-center justify-center cursor-pointer mr-1">
+                                                        <img src="assets/archive.png" alt="archive" className="h-[80%] w-[80%]" />
+                                                    </span>
+                                                    <span className="h-7 w-7 bg-white rounded-md flex items-center justify-center cursor-pointer ml-1 ">
+                                                        <img src="assets/edit.png" alt="archive" className="h-[80%] w-[80%] " />
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="p-4 border-b border-slate-700 bg-slate-800 w-[10%]">
+                                            <p className="text-sm text-slate-300  text-center">
+                                                {new Date(event.Date).toDateString()}
+                                                {/* {event.Date} */}
+                                            </p>
+                                        </td>
+                                        <td className="p-4 border-b border-slate-700 bg-slate-900 w-[10%]">
+                                            <p className="text-sm text-slate-300  text-center">
+                                            {new Date(event.Deadline).toDateString()}
+                                            </p>
+                                        </td>
+                                        <td className="p-4 border-b border-slate-700 bg-slate-800 w-[15%]">
+                                            <p className="text-sm text-slate-300  text-center">
+                                                {event.Location}
+                                            </p>
+                                        </td>
+                                        <td className="p-4 border-b border-slate-700 bg-slate-900 w-[10%]">
+                                            <p className="text-sm text-slate-300  text-center">
+                                                {event.TeamSize ? event.TeamSize : 0 }
+                                            </p>
+                                        </td>
+                                        <td className="p-4 border-b border-slate-700 bg-slate-800 w-[10%]">
+                                            <p className="text-sm text-slate-300  text-center">
+                                                {event.Registered}
+                                            </p>
+                                        </td>
+                                        <td className="p-4 border border-white bg-slate-900 w-[10%]">
+                                            <p className="text-sm text-slate-300  text-center">
+                                                {/* {event.Form} */}
+                                            </p>
+                                        </td>
+                                        <td className="p-4 border-b border-slate-700 bg-slate-800 w-[10%]">
+                                            <div className="text-sm text-slate-300  text-center scale-50">
+                                                <ToggleSwitch status={event.IsActive} id={event._id} />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                )
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </>
