@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 // import { toast } from "react-toastify";
 
 const AddForm = () => {
@@ -20,10 +21,13 @@ const AddForm = () => {
         return alert("No Events Registered");
       }
       try {
-        const { data: axres } = await axios.get(`/api/events?id=${id}`);
-        setAllUserComponents(axres["events"]?.registrationForm?.sequence || []);
-        setTitle(axres["events"].name);
-        setDesc(axres["events"].description);
+        const { data: axres } = await axios.get(
+          `https://9b04-115-244-141-202.ngrok-free.app/api/events?id=${id}`,
+          { headers: { "ngrok-skip-browser-warning": "69420" } }
+        );
+        setAllUserComponents(axres["data"]?.registrationForm?.sequence || []);
+        setTitle(axres["data"][0].Title);
+        setDesc(axres["data"][0].Description);
       } catch (error) {
         console.log(error);
         alert(error?.response?.data?.message);
@@ -39,25 +43,25 @@ const AddForm = () => {
     try {
       if (alluserComponents && alluserComponents[0]) {
         const { data: axres } = await axios.post(
-          `/api/addRegistrationForm?type=${formType}`,
+          `https://9b04-115-244-141-202.ngrok-free.app/addForm`,
           {
             id,
             title,
             description: desc,
-            sequence: alluserComponents,
+            Form: { sequence: alluserComponents },
           }
         );
         if (axres.status) {
-          alert(axres.message);
-          navigate("/" + (formType || "AllEvents"));
+          toast.success(axres.message);
+          navigate("/home");
         } else {
-          alert(axres.message);
+          toast.success(axres.message);
         }
       } else {
-        alert("Please Add Any Input");
+        toast.success("Please Add Any Input");
       }
     } catch (error) {
-      alert(error.response.data.message);
+      toast.success(error.response.data.message);
     }
   }
 
@@ -76,12 +80,13 @@ const AddForm = () => {
           <div className="relative">
             <input
               type="text"
-              name="eventTitle"
+              name="Title"
               value={title}
               onChange={(e) => {
                 setTitle(e.target.value);
               }}
-              className="w-[26rem] text-black px-[1rem] py-[0.5rem] rounded-md"
+              disabled
+              className="w-[26rem] text-white text-black px-[1rem] py-[0.5rem] rounded-md"
               placeholder="Damru"
             />
             <div className="absolute right-[0.8rem] top-1/2 translate-y-[-50%] pointer-events-none">
@@ -96,12 +101,13 @@ const AddForm = () => {
           <div className="relative">
             <input
               type="text"
-              name="eventDesc"
+              name="Description"
               value={desc}
+              disabled
               onChange={(e) => {
                 setDesc(e.target.value);
               }}
-              className="w-[26rem] px-[1rem] py-[0.5rem] rounded-md text-black"
+              className="w-[26rem] text-white px-[1rem] py-[0.5rem] rounded-md text-black"
               placeholder="NST-RU cultural fest"
             />
             <div className="absolute right-[0.8rem] top-1/2 translate-y-[-50%] pointer-events-none">
