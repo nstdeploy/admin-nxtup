@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 // import { toast } from "react-toastify";
 
 const AddForm = () => {
@@ -21,7 +22,8 @@ const AddForm = () => {
       }
       try {
         const { data: axres } = await axios.get(
-          `https://9b04-115-244-141-202.ngrok-free.app/api/events?id=${id}`,{headers:{"ngrok-skip-browser-warning": "69420"}}
+          `https://9b04-115-244-141-202.ngrok-free.app/api/events?id=${id}`,
+          { headers: { "ngrok-skip-browser-warning": "69420" } }
         );
         setAllUserComponents(axres["data"]?.registrationForm?.sequence || []);
         setTitle(axres["data"][0].Title);
@@ -50,16 +52,16 @@ const AddForm = () => {
           }
         );
         if (axres.status) {
-          alert(axres.message);
+          toast.success(axres.message);
           navigate("/home");
         } else {
-          alert(axres.message);
+          toast.success(axres.message);
         }
       } else {
-        alert("Please Add Any Input");
+        toast.success("Please Add Any Input");
       }
     } catch (error) {
-      alert(error.response.data.message);
+      toast.success(error.response.data.message);
     }
   }
 
