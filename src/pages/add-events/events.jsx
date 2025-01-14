@@ -14,7 +14,8 @@ const AddEvents = () => {
     organizer: '',
     prizeWorth: '',
     cost: '',
-    teamSize: '',
+    teamSizeStart: '',
+    teamSizeEnd:'',
     deadline:'',
   });
 const [isUploading, setisUploading] = useState("")
@@ -46,7 +47,8 @@ const [isUploading, setisUploading] = useState("")
     //     formData.append(key, eventData[key]);
     //   };
     eventData["date"] = Number(new Date(eventData["date"]))
-    eventData["teamSize"] = Number((eventData["teamSize"]))
+    eventData["teamSizeStart"] = Number((eventData["teamSizeStart"]))
+    eventData["teamSizeEnd"] = Number((eventData["teamSizeEnd"]))
     eventData["prizeWorth"] = Number((eventData["prizeWorth"]))
     eventData["cost"] = Number((eventData["cost"]))
     eventData["deadline"] = Number(new Date(eventData["deadline"]))
@@ -178,13 +180,25 @@ const [isUploading, setisUploading] = useState("")
             />
           </div>
           <div>
-            <label className="block mt-6 mb-1 font-medium text-md">Team Size</label>
+            <label className="block mt-6 mb-1 font-medium text-md">Team Size Start</label>
             <input 
               type="number" 
               required
-              name="teamSize" 
-              placeholder="Enter team size"
-              value={eventData.teamSize} 
+              name="teamSizeEnd" 
+              placeholder="Enter min team size"
+              value={eventData.teamSizeEnd} 
+              onChange={handleChange} 
+              className="w-full p-2 pl-3 mt-1 text-black bg-white rounded-md" 
+            />
+          </div>
+          <div>
+            <label className="block mt-6 mb-1 font-medium text-md">Team Size End</label>
+            <input 
+              type="number" 
+              required
+              name="teamSizeStart" 
+              placeholder="Enter max team size"
+              value={eventData.teamSizeStart} 
               onChange={handleChange} 
               className="w-full p-2 pl-3 mt-1 text-black bg-white rounded-md" 
             />
