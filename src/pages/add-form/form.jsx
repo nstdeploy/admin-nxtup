@@ -23,9 +23,9 @@ const AddForm = () => {
         const { data: axres } = await axios.get(
           `https://9b04-115-244-141-202.ngrok-free.app/api/events?id=${id}`
         );
-        setalluserComponents(axres["data"]?.registrationForm?.sequence || []);
-        settitle(axres["data"][0].Title);
-        setdesc(axres["data"][0].Description);
+        setAllUserComponents(axres["data"]?.registrationForm?.sequence || []);
+        setTitle(axres["data"][0].Title);
+        setDesc(axres["data"][0].Description);
       } catch (error) {
         console.log(error);
         alert(error?.response?.data?.message);
