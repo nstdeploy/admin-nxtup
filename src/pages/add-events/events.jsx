@@ -168,7 +168,7 @@ const [isUploading, setisUploading] = useState("")
             />
           </div>
           <div>
-            <label className="block mt-6 mb-1 font-medium text-md">Cost</label>
+            <label className="block mt-6 mb-1 font-medium text-md">Registration Fee</label>
             <input 
               type="number" 
               required
