@@ -44,22 +44,22 @@ function Archived() {
     return (
         <>
             <div className="text-white">
-                <div className="h-16 flex items-center justify-between ml-2">
+                <div className="flex items-center justify-between h-16 mt-2 ml-2">
                     <img src="assets/nXTUP.svg" alt="Logo" className="scale-75" />
-                    <div className="flex items-center justify-center scale-50 -mr-14">
+                    <div className="flex items-center justify-center mt-2 scale-50 -mr-14">
                         <img src="assets/nst.svg" alt="NST" />
-                        <h1 className="text-3xl font-extrabold ml-5 mr-5 rotate-45">+</h1>
+                        <h1 className="mt-2 ml-5 mr-5 text-3xl font-extrabold rotate-45">+</h1>
                         <img src="assets/ru.svg" alt="RU" />
                     </div>
                 </div>
                 <div className="flex items-center justify-center mt-5">
-                <div class="relative flex flex-col  w-[98vw] h-full overflow-scroll text-slate-300 bg-slate-800 shadow-md rounded-lg bg-clip-border">
+                <div class="relative flex flex-col w-[98vw] h-full overflow-scroll text-slate-300 bg-slate-800 shadow-md rounded-lg bg-clip-border mt-6">
                     <table class="w-full text-left table-auto">
                         <thead>
                             <tr>
                                 {
                                     EventName.map((name) => (
-                                        <th class="p-4 border-b border-slate-600 bg-slate-700">
+                                        <th class="p-4 border-b border-zinc-600 bg-zinc-900">
                                             <p class="text-sm font-normal leading-none text-slate-300 text-center">
                                                 {name}
                                             </p>
@@ -70,54 +70,56 @@ function Archived() {
                         </thead>
                         <tbody>{
                             eventData.map((event) => (
-                                <tr class="hover:bg-slate-700 ">
-                                    <td class="p-4 border-b border-slate-700 bg-slate-900 w-[20%]">
-                                        <p class="text-sm text-slate-100 font-semibold ">
+                                <tr class="hover:bg-slate-700 text-center">
+                                    <td class="p-4 bg-zinc-800 w-[20%]">
+                                        <p class="text-slate-100 font-semibold ">
                                             {event.title}
                                         </p>
                                     </td>
-                                    <td class="p-4 border-b border-slate-700 bg-slate-800 w-[8%]">
-                                        <p class="text-sm text-slate-300  text-center">
+                                    {/* Make some changes to the date and time so they look different */}
+                                    <td class="p-4 bg-zinc-700 w-[8%]">
+                                        <p class="text-xs text-slate-300">
                                             {event.Start}
                                         </p>
                                     </td>
-                                    <td class="p-4 border-b border-slate-700 bg-slate-900 w-[8%]">
-                                        <p class="text-sm text-slate-300  text-center">
+                                    <td class="p-4 bg-zinc-800 w-[8%]">
+                                        <p class="text-xs text-slate-300">
                                             {event.End}
                                         </p>
                                     </td>
-                                    <td class="p-4 border-b border-slate-700 bg-slate-800 w-[20%]">
-                                        <p class="text-sm text-slate-300  text-center">
+                                    <td class="p-4 bg-zinc-700 w-[20%]">
+                                        <p class="text-sm text-slate-300">
+                                            {/* The user should see few parts of the description and can be redirected to the edit page if he wants to edit the description */}
                                             {event.Description}
                                         </p>
                                     </td>
-                                    <td class="p-4 border-b border-slate-700 bg-slate-900 w-[20%]">
-                                        <p class="text-sm text-slate-300  text-center">
-                                            {event.Rules}
+                                    <td class="p-4 bg-zinc-800 w-[20%]">
+                                        <p class="text-sm text-slate-300">
+                                            {event.Rules} {/* For rules we will provide a PDF or doc or remove rules all together from the dashboard or Provide a hyperlink to edi the rules form here*/}
                                         </p>
                                     </td>
-                                    <td class="p-4 border-b border-slate-700 bg-slate-800 w-[10%]">
-                                        <p class="text-sm text-slate-300  text-center">
+                                    <td class="p-4 bg-zinc-700 w-[10%]">
+                                        <p class="text-sm text-slate-300">
                                             {event.location}
                                         </p>
                                     </td>
-                                    <td class="p-4 border-b border-slate-700 bg-slate-900 w-[6%]">
-                                        <p class="text-sm text-slate-300  text-center">
+                                    <td class="p-4 bg-zinc-800 w-[6%]">
+                                        <p class="text-sm text-slate-300">
                                             {event.TeamSize}
                                         </p>
                                     </td>
-                                    <td class="p-4 border-b border-slate-700 bg-slate-800 w-[6%]">
-                                        <p class="text-sm text-slate-300  text-center">
-                                            {event.totalRegisterations}
+                                    <td class="p-4 bg-zinc-700 w-[6%]">
+                                        <p class="text-sm text-slate-300">
+                                            {event.totalRegisterations} {/* Typo in the variable name */}
                                         </p>
                                     </td>
-                                    <td class="p-4 border-b border-slate-700 bg-slate-900 w-[6%]">
-                                        <p class="text-sm text-slate-300  text-center">
+                                    <td class="p-4 bg-zinc-800 w-[6%]">
+                                        <p class="text-sm text-slate-300">
                                             {event.Winner}
                                         </p>
                                     </td>
-                                    <td class="p-4 border-b border-slate-700 bg-slate-800 w-[6%]">
-                                        <p class="text-sm text-slate-300  text-center">
+                                    <td class="p-4 bg-zinc-700 w-[6%]">
+                                        <p class="text-sm text-slate-300">
                                             {event.Form}
                                         </p>
                                     </td>

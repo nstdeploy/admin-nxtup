@@ -22,7 +22,7 @@ function ManageEvents() {
             "End": "03/01/2025 & 1:00 PM",
             "location": "A-Block",
             "TeamSize": 3,
-            "totalRegisterations": 101,
+            "totalRegistrations": 101,
             "Form": "",
             "isActive": "False",
         }
@@ -42,16 +42,16 @@ function ManageEvents() {
     return (
         <>
             <div className="text-white">
-                <div className="h-16 flex items-center justify-between ml-2">
+                <div className="flex items-center justify-between h-16 ml-2">
                     <img src="assets/nXTUP.svg" alt="Logo" className="scale-75" />
                     <div className="flex items-center justify-center scale-50 -mr-14">
                         <img src="assets/nst.svg" alt="NST" />
-                        <h1 className="text-3xl font-extrabold ml-5 mr-5 rotate-45">+</h1>
+                        <h1 className="ml-5 mr-5 text-3xl font-extrabold rotate-45">+</h1>
                         <img src="assets/ru.svg" alt="RU" />
                     </div>
                 </div>
                 <div className="flex items-center justify-center mt-5">
-                <div class="relative flex flex-col  w-[98vw] h-full overflow-scroll text-slate-300 bg-slate-800 shadow-md rounded-lg bg-clip-border">
+                <div class="relative flex flex-col w-[98vw] h-full overflow-scroll text-slate-300 bg-slate-800 shadow-md rounded-lg bg-clip-border">
                     <table class="w-full text-left table-auto">
                         <thead>
                             <tr>
@@ -96,10 +96,10 @@ function ManageEvents() {
                                     </td>
                                     <td class="p-4 border-b border-slate-700 bg-slate-800 w-[10%]">
                                         <p class="text-sm text-slate-300  text-center">
-                                            {event.totalRegisterations}
+                                            {event.totalRegistrations}
                                         </p>
                                     </td>
-                                    <td class="p-4 border-b border-slate-700 bg-slate-900 w-[10%]">
+                                    <td class="p-4 border border-white bg-slate-900 w-[10%]">
                                         <p class="text-sm text-slate-300  text-center">
                                             {event.Form}
                                         </p>
