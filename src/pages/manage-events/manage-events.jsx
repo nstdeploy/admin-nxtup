@@ -24,7 +24,7 @@ function ManageEvents() {
           { headers: { "ngrok-skip-browser-warning": "69420" } }
         );
 
-        const Data = response.data.data;
+        const Data = response.data.data.reverse();
         setEvents(Data);
       } catch (error) {
         console.error("Error fetching events:", error);
@@ -136,8 +136,14 @@ function ManageEvents() {
                       </p>
                     </td>
                     <td className="p-4 border border-white bg-slate-900 w-[10%]">
-                      <p className="text-sm text-slate-300  text-center">
+                      <p
+                        onClick={() => {
+                          navigate("/addForm?id=" + event._id);
+                        }}
+                        className="text-sm text-slate-300  text-center hover:underline hover:text-blue-600 cursor-pointer"
+                      >
                         {/* {event.Form} */}
+                        Update Form
                       </p>
                     </td>
                     <td className="p-4 border-b border-slate-700 bg-slate-800 w-[10%]">

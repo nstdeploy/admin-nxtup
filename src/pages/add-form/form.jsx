@@ -25,7 +25,7 @@ const AddForm = () => {
           `https://9b04-115-244-141-202.ngrok-free.app/api/events?id=${id}`,
           { headers: { "ngrok-skip-browser-warning": "69420" } }
         );
-        setAllUserComponents(axres["data"]?.registrationForm?.sequence || []);
+        setAllUserComponents(axres["data"][0]?.Form?.sequence || []);
         setTitle(axres["data"][0].Title);
         setDesc(axres["data"][0].Description);
       } catch (error) {
