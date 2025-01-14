@@ -15,6 +15,7 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route path="/" Component={login}/>
+              <Route path="/login" Component={login}/>
               <Route path="/addevents" element={<AddEvents />}/>
               <Route path="addForm" Component={AddForm} />
               <Route path="home" Component={Home}/>
