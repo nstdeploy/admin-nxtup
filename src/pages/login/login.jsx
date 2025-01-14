@@ -1,5 +1,5 @@
 import { toast } from "react-toastify"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Nav from "../../components/nav";
 
@@ -48,6 +48,13 @@ function Login() {
             console.log(error)
         }
     }
+
+    useEffect(() => {
+        const token = localStorage.getItem("accessToken");
+        if (token) {
+            navigate('/home');
+        }
+    }, [navigate]);
 
     return(
     <div className="text-white bg-black">

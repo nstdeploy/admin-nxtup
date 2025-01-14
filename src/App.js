@@ -14,7 +14,7 @@ function App() {
     <div className="bg-black min-h-[100vh]">
           <BrowserRouter>
             <Routes>
-              <Route path="login" Component={login}/>
+              <Route path="/" Component={login}/>
               <Route path="/addevents" element={<AddEvents />}/>
               <Route path="addForm" Component={AddForm} />
               <Route path="home" Component={Home}/>
