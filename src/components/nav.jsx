@@ -1,8 +1,8 @@
 function Nav() {
     return(
         <>
-            <div className="h-16 flex items-center justify-start ml-2">
-                <img src="assets/nXTUP.svg" alt="Logo" className="scale-75"/>
+            <div className="flex items-center justify-start h-16 ml-2">
+                <img src="assets/nXTUP.svg" alt="Logo" className="pt-4 pl-2 scale-75"/>
             </div>
         </>
     )

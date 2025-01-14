@@ -9,9 +9,9 @@ const AddForm = () => {
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get("id");
   const type = queryParams.get("type");
-  const [title, settitle] = useState("");
-  const [desc, setdesc] = useState("");
-  const [alluserComponents, setalluserComponents] = useState([]);
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
+  const [alluserComponents, setAllUserComponents] = useState([]);
   const [formType, setFormType] = useState(type || "AllEvents");
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const AddForm = () => {
   }, [id, formType]);
 
   function deleteInput(id) {
-    setalluserComponents((prev) => prev.filter((el) => el.currentId !== id));
+    setAllUserComponents((prev) => prev.filter((el) => el.currentId !== id));
   }
 
   async function submitRegisterForm() {
@@ -65,7 +65,7 @@ const AddForm = () => {
 
   // console.log(JSON.stringify(alluserComponents));
   return (
-    <div className="flex justify-center bg-black text-white">
+    <div className="flex justify-center text-white bg-black">
       <div className="p-[1rem]">
         <h3
           className="px-[1rem] font-bold text-3xl"
@@ -81,7 +81,7 @@ const AddForm = () => {
               name="Title"
               value={title}
               onChange={(e) => {
-                settitle(e.target.value);
+                setTitle(e.target.value);
               }}
               disabled
               className="w-[26rem] text-white text-black px-[1rem] py-[0.5rem] rounded-md"
@@ -103,7 +103,7 @@ const AddForm = () => {
               value={desc}
               disabled
               onChange={(e) => {
-                setdesc(e.target.value);
+                setDesc(e.target.value);
               }}
               className="w-[26rem] text-white px-[1rem] py-[0.5rem] rounded-md text-black"
               placeholder="NST-RU cultural fest"
@@ -138,7 +138,7 @@ const AddForm = () => {
                           placeholder={el?.inputNamePlaceholder}
                           value={el?.inputName || ""}
                           onChange={(curel) => {
-                            setalluserComponents((prev) =>
+                            setAllUserComponents((prev) =>
                               prev.map((ell) =>
                                 ell.currentId == el.currentId
                                   ? { ...ell, inputName: curel.target.value }
@@ -155,7 +155,7 @@ const AddForm = () => {
                             placeholder="Text Placeholder (Editable)"
                             value={el?.placeholder || ""}
                             onChange={(curel) => {
-                              setalluserComponents((prev) =>
+                              setAllUserComponents((prev) =>
                                 prev.map((ell) =>
                                   ell.currentId == el.currentId
                                     ? {
@@ -199,7 +199,7 @@ const AddForm = () => {
                         value={el?.inputName || ""}
                         placeholder={el?.inputNamePlaceholder}
                         onChange={(curel) => {
-                          setalluserComponents((prev) =>
+                          setAllUserComponents((prev) =>
                             prev.map((ell) =>
                               ell.currentId == el.currentId
                                 ? { ...ell, inputName: curel.target.value }
@@ -215,7 +215,7 @@ const AddForm = () => {
                             type="text"
                             value={el?.placeholder || ""}
                             onChange={(curel) => {
-                              setalluserComponents((prev) =>
+                              setAllUserComponents((prev) =>
                                 prev.map((ell) =>
                                   ell.currentId == el.currentId
                                     ? {
@@ -255,7 +255,7 @@ const AddForm = () => {
                         value={el?.inputName || ""}
                         placeholder={el?.inputNamePlaceholder}
                         onChange={(curel) => {
-                          setalluserComponents((prev) =>
+                          setAllUserComponents((prev) =>
                             prev.map((ell) =>
                               ell.currentId == el.currentId
                                 ? {
@@ -274,7 +274,7 @@ const AddForm = () => {
                             type="text"
                             value={el?.placeholder || ""}
                             onChange={(curel) => {
-                              setalluserComponents((prev) =>
+                              setAllUserComponents((prev) =>
                                 prev.map((ell) =>
                                   ell.currentId == el.currentId
                                     ? {
@@ -314,7 +314,7 @@ const AddForm = () => {
                         value={el?.inputName || ""}
                         placeholder={el?.inputNamePlaceholder}
                         onChange={(curel) => {
-                          setalluserComponents((prev) =>
+                          setAllUserComponents((prev) =>
                             prev.map((ell) =>
                               ell.currentId == el.currentId
                                 ? {
@@ -335,7 +335,7 @@ const AddForm = () => {
                             placeholder="Checkbox option values (',' seperated values)"
                             value={el?.placeholder || ""}
                             onChange={(curel) => {
-                              setalluserComponents((prev) =>
+                              setAllUserComponents((prev) =>
                                 prev.map((ell) =>
                                   ell.currentId == el.currentId
                                     ? {
@@ -430,7 +430,7 @@ const AddForm = () => {
               <div
                 key={Math.floor(Math.random() * 999) + el.type}
                 onClick={() => {
-                  setalluserComponents((prev) => [...prev, { ...el }]);
+                  setAllUserComponents((prev) => [...prev, { ...el }]);
                 }}
                 className="text-center py-[0.8rem] px-[1rem] hover:bg-slate-800 transition-all duration-200 cursor-pointer"
               >
