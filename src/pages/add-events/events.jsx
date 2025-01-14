@@ -15,6 +15,7 @@ const AddEvents = () => {
     prizeWorth: '',
     cost: '',
     teamSize: '',
+    deadline:'',
   });
 const [isUploading, setisUploading] = useState("")
   const handleChange = (e) => {
@@ -48,6 +49,7 @@ const [isUploading, setisUploading] = useState("")
     eventData["teamSize"] = Number((eventData["teamSize"]))
     eventData["prizeWorth"] = Number((eventData["prizeWorth"]))
     eventData["cost"] = Number((eventData["cost"]))
+    eventData["deadline"] = Number(new Date(eventData["deadline"]))
     
       const response = await fetch('https://9b04-115-244-141-202.ngrok-free.app/api/events', {
         method: 'POST',
@@ -185,6 +187,16 @@ const [isUploading, setisUploading] = useState("")
               value={eventData.teamSize} 
               onChange={handleChange} 
               className="w-full p-2 pl-3 mt-1 text-black bg-white rounded-md" 
+            />
+          </div>
+          <div>
+            <label className="block mt-6 mb-1 font-medium text-md">Registration Deadline</label>
+            <input 
+              type="date" 
+              name="deadline" 
+              value={eventData.deadline} 
+              onChange={handleChange} 
+              className="w-full p-2 mt-1 text-black bg-white rounded-md" 
             />
           </div>
           <div>
