@@ -18,7 +18,8 @@ function Home() {
     }, [])
 
     const ButtonArr = [
-        { idx: "Add New-Event", send: "addevents" }, { idx: "Manage Event", send: "events" }, { idx: "Archived Events", send: "archived" }]
+        { idx: "Add New-Event", send: "addevents" }, { idx: "Manage Event", send: "events" }]
+        // { idx: "Archived Events", send: "archived" }
 
     const LogOut = () => {
         localStorage.removeItem('accessToken')

@@ -307,7 +307,7 @@ const AddEvents = () => {
               disabled={isUploading ? true : false}
               className="w-[13rem] pt-3 pb-3 pl-6 pr-6 mt-6 font-medium text-white bg-zinc-600 rounded-lg ml-[74.5%] hover:bg-zinc-700 duration-300"
             >
-              {isUploading ? isUploading : "Add Event"}
+              {queryParams.get("id") ? "Update" : "Add New"} {isUploading ? isUploading : "Event"}
             </button>
           </div>
         </form>

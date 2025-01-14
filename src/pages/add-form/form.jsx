@@ -446,6 +446,12 @@ const AddForm = () => {
           >
             Submit
           </button>
+          <button
+            className="px-[1rem] py-[0.8rem] bg-slate-900 text-white w-[26rem] rounded-tl-md rounded-tr-md cursor-pointer mt-[1rem]"
+            onClick={() => navigate("/home")}
+          >
+            Skip This step
+          </button>
         </div>
       </div>
     </div>
