@@ -20,7 +20,7 @@ function ManageEvents() {
     const getEvents = async () => {
       try {
         const response = await axios.get(
-          "https://9b04-115-244-141-202.ngrok-free.app/api/events",
+          "https://server-admin-nxtup-r754.onrender.com/api/events",
           { headers: { "ngrok-skip-browser-warning": "69420" } }
         );
 

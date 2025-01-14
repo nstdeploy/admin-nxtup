@@ -21,7 +21,7 @@ const ToggleSwitch = ({ status, id }) => {
         active: status,
       };
       const response = await axios.post(
-        "https://9b04-115-244-141-202.ngrok-free.app/api/toggleEventStatus",
+        "https://server-admin-nxtup-r754.onrender.com/api/toggleEventStatus",
         requestData,
         {
           headers: {

@@ -35,7 +35,7 @@ const AddEvents = () => {
       if (queryParams.get("id")) {
         const { data: axres } = await axios
           .get(
-            `https://9b04-115-244-141-202.ngrok-free.app/api/events?id=${queryParams.get(
+            `https://server-admin-nxtup-r754.onrender.com/api/events?id=${queryParams.get(
               "id"
             )}`,
             { headers: { "ngrok-skip-browser-warning": "69420" } }
@@ -89,7 +89,7 @@ const AddEvents = () => {
       var formdata = new FormData();
       formdata.append("file", e.target.files[0]);
       var axres = await axios.post(
-        "https://9b04-115-244-141-202.ngrok-free.app/api/uploadImage",
+        "https://server-admin-nxtup-r754.onrender.com/api/uploadImage",
         formdata
       );
       setEventData({ ...eventData, banner: axres.data.filePath });
@@ -119,7 +119,7 @@ const AddEvents = () => {
       eventData["deadline"] = Number(new Date(eventData["deadline"]));
 
       const response = await fetch(
-        "https://9b04-115-244-141-202.ngrok-free.app/api/events",
+        "https://server-admin-nxtup-r754.onrender.com/api/events",
         {
           method: "POST",
           body: JSON.stringify(eventData),
@@ -249,9 +249,11 @@ const AddEvents = () => {
             />
           </div>
           <div>
-            <label className="block mt-6 mb-1 font-medium text-md">Registration Fee</label>
-            <input 
-              type="number" 
+            <label className="block mt-6 mb-1 font-medium text-md">
+              Registration Fee
+            </label>
+            <input
+              type="number"
               required
               name="cost"
               placeholder="Enter registration fee"
@@ -307,7 +309,8 @@ const AddEvents = () => {
               disabled={isUploading ? true : false}
               className="w-[13rem] pt-3 pb-3 pl-6 pr-6 mt-6 font-medium text-white bg-zinc-600 rounded-lg ml-[74.5%] hover:bg-zinc-700 duration-300"
             >
-              {queryParams.get("id") ? "Update" : "Add New"} {isUploading ? isUploading : "Event"}
+              {queryParams.get("id") ? "Update" : "Add New"}{" "}
+              {isUploading ? isUploading : "Event"}
             </button>
           </div>
         </form>

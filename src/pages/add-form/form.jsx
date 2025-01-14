@@ -22,7 +22,7 @@ const AddForm = () => {
       }
       try {
         const { data: axres } = await axios.get(
-          `https://9b04-115-244-141-202.ngrok-free.app/api/events?id=${id}`,
+          `https://server-admin-nxtup-r754.onrender.com/api/events?id=${id}`,
           { headers: { "ngrok-skip-browser-warning": "69420" } }
         );
         setAllUserComponents(axres["data"][0]?.Form?.sequence || []);
@@ -43,7 +43,7 @@ const AddForm = () => {
     try {
       if (alluserComponents && alluserComponents[0]) {
         const { data: axres } = await axios.post(
-          `https://9b04-115-244-141-202.ngrok-free.app/addForm`,
+          `https://server-admin-nxtup-r754.onrender.com/addForm`,
           {
             id,
             title,
