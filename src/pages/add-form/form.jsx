@@ -43,7 +43,7 @@ const AddForm = () => {
     try {
       if (alluserComponents && alluserComponents[0]) {
         const { data: axres } = await axios.post(
-          `http://localhost:6969/addForm`,
+          `https://9b04-115-244-141-202.ngrok-free.app/addForm`,
           {
             id,
             title,
