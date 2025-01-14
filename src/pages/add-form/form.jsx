@@ -20,7 +20,7 @@ const AddForm = () => {
         return alert("No Events Registered");
       }
       try {
-        const { data: axres } = await axios.get(`/api/events?id=${id}`);
+        const { data: axres } = await axios.get(`https://9b04-115-244-141-202.ngrok-free.app/api/events/api/events?id=${id}`);
         setAllUserComponents(axres["events"]?.registrationForm?.sequence || []);
         setTitle(axres["events"].name);
         setDesc(axres["events"].description);
