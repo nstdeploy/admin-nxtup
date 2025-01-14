@@ -20,10 +20,12 @@ const AddForm = () => {
         return alert("No Events Registered");
       }
       try {
-        const { data: axres } = await axios.get(`https://9b04-115-244-141-202.ngrok-free.app/api/events/api/events?id=${id}`);
-        setAllUserComponents(axres["events"]?.registrationForm?.sequence || []);
-        setTitle(axres["events"].name);
-        setDesc(axres["events"].description);
+        const { data: axres } = await axios.get(
+          `https://9b04-115-244-141-202.ngrok-free.app/api/events?id=${id}`
+        );
+        setalluserComponents(axres["data"]?.registrationForm?.sequence || []);
+        settitle(axres["data"][0].Title);
+        setdesc(axres["data"][0].Description);
       } catch (error) {
         console.log(error);
         alert(error?.response?.data?.message);
@@ -39,17 +41,17 @@ const AddForm = () => {
     try {
       if (alluserComponents && alluserComponents[0]) {
         const { data: axres } = await axios.post(
-          `/api/addRegistrationForm?type=${formType}`,
+          `http://localhost:6969/addForm`,
           {
             id,
             title,
             description: desc,
-            sequence: alluserComponents,
+            Form: { sequence: alluserComponents },
           }
         );
         if (axres.status) {
           alert(axres.message);
-          navigate("/" + (formType || "AllEvents"));
+          navigate("/home");
         } else {
           alert(axres.message);
         }
@@ -76,12 +78,13 @@ const AddForm = () => {
           <div className="relative">
             <input
               type="text"
-              name="eventTitle"
+              name="Title"
               value={title}
               onChange={(e) => {
                 setTitle(e.target.value);
               }}
-              className="w-[26rem] text-black px-[1rem] py-[0.5rem] rounded-md"
+              disabled
+              className="w-[26rem] text-white text-black px-[1rem] py-[0.5rem] rounded-md"
               placeholder="Damru"
             />
             <div className="absolute right-[0.8rem] top-1/2 translate-y-[-50%] pointer-events-none">
@@ -96,12 +99,13 @@ const AddForm = () => {
           <div className="relative">
             <input
               type="text"
-              name="eventDesc"
+              name="Description"
               value={desc}
+              disabled
               onChange={(e) => {
                 setDesc(e.target.value);
               }}
-              className="w-[26rem] px-[1rem] py-[0.5rem] rounded-md text-black"
+              className="w-[26rem] text-white px-[1rem] py-[0.5rem] rounded-md text-black"
               placeholder="NST-RU cultural fest"
             />
             <div className="absolute right-[0.8rem] top-1/2 translate-y-[-50%] pointer-events-none">
