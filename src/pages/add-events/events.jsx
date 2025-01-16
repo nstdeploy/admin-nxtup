@@ -131,17 +131,18 @@ const AddEvents = () => {
       var body = await response.json();
       if (response.ok) {
         if (body.status) {
-          console.log(body.message);
+          toast.success(body.message);
           navigate(`/addForm?id=${body.data._id}`);
         } else {
-          console.log(body.message);
+          toast.error(body.message);
         }
         // window.location.href = ``;
       } else {
-        console.error("Failed to add event");
+        toast.error("Failed to add event");
       }
     } catch (error) {
       console.error("Error submitting form:", error);
+      toast.error("Error submitting form");
     }
   };
 
