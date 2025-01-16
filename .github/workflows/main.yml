@@ -2,7 +2,7 @@ name: Sync Fork
 
 on:
   schedule:
-    - cron: '*/1 * * * *' # Every minute
+    - cron: '*/5 * * * *' # Every minute
   workflow_dispatch:
 
 jobs:
