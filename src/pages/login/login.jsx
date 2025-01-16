@@ -2,10 +2,11 @@ import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Nav from "../../components/nav";
+import Loader from "../../components/Loader";
 
 function Login() {
   const ForgotPass = () => toast.error("Kindly Contact Your Admin!");
-  const [isLoading, setisLoading] = useState("");
+  const [isLoading, setisLoading] = useState(false);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({});
@@ -19,6 +20,8 @@ function Login() {
 
   const sendLoginData = async (e) => {
     e.preventDefault();
+
+    setisLoading(true);
 
     try {
       const response = await fetch(
@@ -35,16 +38,20 @@ function Login() {
       const body = await response.json();
 
       if (response.ok) {
+        
         navigate("/home");
         toast.success("Login successful!");
         localStorage.setItem("accessToken", body.token);
-        console.log(body.token);
+
       } else {
         toast.error("There seems to be some error !");
       }
     } catch (error) {
       toast.error("An error occurred while logging you in !");
       console.log(error);
+    }
+    finally {
+      setisLoading(false); 
     }
   };
 
@@ -54,6 +61,8 @@ function Login() {
       navigate("/home");
     }
   }, [navigate]);
+
+  
 
   return (
     <div className="text-white bg-black">
@@ -104,14 +113,17 @@ function Login() {
               Forgot Password?
             </span>
           </div>
-
+          {isLoading ? 
+          <div className="mb-10">
+            <Loader/> 
+          </div>
+          : 
           <button
-            disabled={isLoading ? true : false}
             type="submit"
             className="mb-10 bg-zinc-600 h-[40px] w-[28.125rem] flex items-center justify-center rounded-lg cursor-pointer hover:bg-zinc-700 duration-300 hover:text-gray-300"
           >
-            {isLoading || "Submit"}
-          </button>
+            Submit
+          </button>}
         </form>
       </div>
     </div>

@@ -8,6 +8,7 @@ import AddForm from "./pages/add-form/form";
 import Home from "./pages/home/home";
 import Archived from "./pages/Archived/ArchivedEvents";
 import ManageEvents from "./pages/manage-events/manage-events";
+import Registrations from "./pages/registration_detail/student_registrations";
 
 function App() {
   return (
@@ -20,7 +21,8 @@ function App() {
               <Route path="addForm" Component={AddForm} />
               <Route path="home" Component={Home}/>
               <Route path="archived" Component={Archived}/> 
-              <Route path="events" Component={ManageEvents}/>             
+              <Route path="events" Component={ManageEvents}/>  
+              <Route path="events/:id"element={<Registrations/>}/> 
             </Routes>
           </BrowserRouter>
           <ToastContainer  theme="dark"/>
