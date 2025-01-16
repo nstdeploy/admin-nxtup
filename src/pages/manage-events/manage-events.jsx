@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ToggleSwitch from "../../components/ToggleSwitch";
 import LoginNav from "../../components/LoginNav";
 import axios from "axios";
+import Loader from "../../components/Loader";
 
 function ManageEvents() {
   const accessToken = localStorage.getItem("accessToken");
@@ -34,18 +35,6 @@ function ManageEvents() {
     getEvents();
   }, []);
 
-  const eventData = [
-    {
-      title: "NST Hackathon",
-      Start: "01/01/2025 & 12:00 PM",
-      End: "03/01/2025 & 1:00 PM",
-      location: "A-Block",
-      TeamSize: 3,
-      totalRegistrations: 101,
-      Form: "",
-      isActive: "False",
-    },
-  ];
 
   const EventName = [
     "Event Title",
@@ -57,6 +46,17 @@ function ManageEvents() {
     "Form",
     "LiveStatus",
   ];
+
+  if (events.length === 0) {
+    return (
+    <>
+        <LoginNav/>
+        <Loader/>   
+    </>
+    )
+}
+
+
 
   return (
     <>
@@ -131,9 +131,10 @@ function ManageEvents() {
                       </p>
                     </td>
                     <td className="p-4 border-b border-slate-700 bg-slate-800 w-[10%]">
-                      <p className="text-sm text-slate-300  text-center">
-                        {event.Registered}
-                      </p>
+                      <div className="text-sm text-slate-300  text-center flex items-center justify-center">
+                        <span className="pr-3">{event.Registered}</span>
+                        <img src="assets/next.png" alt="See more.." className="h-6 w-6 bg-white rounded-full cursor-pointer" onClick={() => {navigate(`/events/${event._id}`)}}/>
+                      </div>
                     </td>
                     <td className="p-4 border border-white bg-slate-900 w-[10%]">
                       <p
