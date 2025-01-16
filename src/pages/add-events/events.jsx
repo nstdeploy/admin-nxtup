@@ -102,27 +102,28 @@ const AddEvents = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Event Data:", eventData);
+    var EventData = eventData;
 
     try {
       //   const formData = new FormData();
       //   for (const key in eventData) {
       //     formData.append(key, eventData[key]);
       //   };
-      if (!eventData["banner"]) {
+      if (!EventData["banner"]) {
         return toast.error("Please upload a banner");
       }
-      eventData["date"] = Number(new Date(eventData["date"]));
-      eventData["teamSizeStart"] = Number(eventData["teamSizeStart"]);
-      eventData["teamSizeEnd"] = Number(eventData["teamSizeEnd"]);
-      eventData["prizeWorth"] = Number(eventData["prizeWorth"]);
-      eventData["cost"] = Number(eventData["cost"]);
-      eventData["deadline"] = Number(new Date(eventData["deadline"]));
+      EventData["date"] = Number(new Date(EventData["date"]));
+      EventData["teamSizeStart"] = Number(EventData["teamSizeStart"]);
+      EventData["teamSizeEnd"] = Number(EventData["teamSizeEnd"]);
+      EventData["prizeWorth"] = Number(EventData["prizeWorth"]);
+      EventData["cost"] = Number(EventData["cost"]);
+      EventData["deadline"] = Number(new Date(EventData["deadline"]));
 
       const response = await fetch(
         "https://server-admin-nxtup-r754.onrender.com/api/events",
         {
           method: "POST",
-          body: JSON.stringify(eventData),
+          body: JSON.stringify(EventData),
           headers: {
             "content-type": "application/json",
           },

@@ -138,7 +138,7 @@ const AddForm = () => {
             } flex flex-col gap-[0.8rem]`}
           >
             {alluserComponents.map((el) => {
-              if (el.type == "Text") {
+              if (el.type == "text") {
                 return (
                   <>
                     <div className="flex gap-[1rem] items-end">
@@ -199,7 +199,7 @@ const AddForm = () => {
                     </div>
                   </>
                 );
-              } else if (el.type == "Radio") {
+              } else if (el.type == "radio") {
                 return (
                   <>
                     <div className="flex flex-col gap-[0.5rem]">
@@ -262,7 +262,7 @@ const AddForm = () => {
                     </div>
                   </>
                 );
-              } else if (el.type == "Select") {
+              } else if (el.type == "select") {
                 return (
                   <>
                     <div className="flex flex-col gap-[0.5rem]">
@@ -321,7 +321,7 @@ const AddForm = () => {
                     </div>
                   </>
                 );
-              } else if (el.type == "Checkbox") {
+              } else if (el.type == "checkbox") {
                 return (
                   <>
                     <div className="flex flex-col gap-[0.5rem]">
@@ -416,29 +416,50 @@ const AddForm = () => {
           <div className="flex text-white flex-col gap-[0.5rem] h-0 overflow-hidden bg-slate-900 w-[26rem] rounded-bl-md rounded-br-md transition-all duration-300">
             {[
               {
-                type: "Text",
+                type: "text",
                 inputName: "",
                 inputNamePlaceholder: "Example Text input title (Editable)",
                 // placeholder: "Text Placeholder (Editable)",
                 currentId: Math.random() * 99999,
               },
               {
-                type: "Radio",
+                type: "email",
+                inputName: "",
+                inputNamePlaceholder: "Email input title (Editable)",
+                // placeholder: "Checkbox option values (',' seperated values)",
+                currentId: Math.random() * 99999,
+              },
+              {
+                type: "number",
+                inputName: "",
+                inputNamePlaceholder: "number input title (Editable)",
+                // placeholder: "Checkbox option values (',' seperated values)",
+                currentId: Math.random() * 99999,
+              },
+              {
+                type: "radio",
                 inputName: "",
                 inputNamePlaceholder: "Example Radio input title (Editable)",
                 currentId: Math.random() * 99999,
               },
               {
-                type: "Select",
+                type: "select",
                 inputName: "",
                 inputNamePlaceholder: "Example Select input title (Editable)",
                 // placeholder: "Select option values (',' seperated values)",
                 currentId: Math.random() * 99999,
               },
               {
-                type: "Checkbox",
+                type: "checkbox",
                 inputName: "",
                 inputNamePlaceholder: "Example Checkbox input title (Editable)",
+                // placeholder: "Checkbox option values (',' seperated values)",
+                currentId: Math.random() * 99999,
+              },
+              {
+                type: "textarea",
+                inputName: "",
+                inputNamePlaceholder: "Example TextArea input title (Editable)",
                 // placeholder: "Checkbox option values (',' seperated values)",
                 currentId: Math.random() * 99999,
               },
@@ -459,7 +480,6 @@ const AddForm = () => {
             onClick={submitRegisterForm}
             disabled={loading}
           >
-            Submit
             {loading ? "Submitting..." : "Submit"}
           </button>
           <button
