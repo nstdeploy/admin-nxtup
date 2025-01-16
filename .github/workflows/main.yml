@@ -1,0 +1,50 @@
+name: Sync Fork
+
+on:
+  schedule:
+    - cron: '*/1 * * * *' # Every minute
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Upstream Repository
+        uses: actions/checkout@v3
+        with:
+          repository: devclub-nstru/admin-nxtup
+          ref: main
+          fetch-depth: 0 # Fetch the full history
+          path: upstream-repo
+
+      - name: Checkout Forked Repository
+        uses: actions/checkout@v3
+        with:
+          repository: nstdeploy/admin-nxtup
+          ref: main
+          fetch-depth: 0 # Fetch the full history
+          path: forked-repo
+
+      - name: Set Git Identity
+        run: |
+          git config --global user.email "githubBot@github.com"
+          git config --global user.name "Github Workflow"
+
+      - name: Check for Changes
+        run: |
+          cd upstream-repo
+          UPSTREAM_HASH=$(git rev-parse HEAD)
+          cd ../forked-repo
+          FORK_HASH=$(git rev-parse origin/main)
+          if [ "$UPSTREAM_HASH" = "$FORK_HASH" ]; then
+            echo "No changes detected, fork is already synced."
+            exit 0
+          fi
+
+      - name: Sync Changes
+        run: |
+          cd forked-repo
+          git remote add upstream ../upstream-repo
+          git fetch upstream
+          git merge upstream/main --no-ff
+          git push origin main
