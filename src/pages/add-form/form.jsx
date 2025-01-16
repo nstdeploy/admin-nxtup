@@ -667,7 +667,7 @@ const AddForm = () => {
                               );
                             }}
                             className="text-black rounded-md w-[26rem] px-[1rem] py-[0.5rem]"
-                            placeholder="Option values (',' separated values)"
+                            placeholder="Input Placeholder Value"
                           />
                         </div>
                         <div
