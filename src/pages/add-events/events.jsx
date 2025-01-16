@@ -130,8 +130,12 @@ const AddEvents = () => {
       );
       var body = await response.json();
       if (response.ok) {
-        console.log("Event added successfully!");
-        navigate(`/addForm?id=${body.data._id}`);
+        if (body.status) {
+          console.log(body.message);
+          navigate(`/addForm?id=${body.data._id}`);
+        } else {
+          console.log(body.message);
+        }
         // window.location.href = ``;
       } else {
         console.error("Failed to add event");

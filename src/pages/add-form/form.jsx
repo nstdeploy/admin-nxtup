@@ -18,6 +18,16 @@ const AddForm = () => {
   useEffect(() => {
     (async () => {
       if (!id) {
+        setAllUserComponents((prev) => [
+          ...prev,
+          {
+            type: "Text",
+            inputName: "Email",
+            inputNamePlaceholder: "Enter your email",
+            currentId: 29891.74452652699,
+            placeholder: "Enter your email",
+          },
+        ]);
         return alert("No Events Registered");
       }
       try {
