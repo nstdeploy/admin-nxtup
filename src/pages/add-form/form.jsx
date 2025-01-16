@@ -50,6 +50,30 @@ const AddForm = () => {
     setAllUserComponents((prev) => prev.filter((el) => el.currentId !== id));
   }
 
+  function moveComponentUp(index) {
+    setAllUserComponents((prev) => {
+      if (index === 0) return prev; // Can't move the first item up
+      const newComponents = [...prev];
+      [newComponents[index - 1], newComponents[index]] = [
+        newComponents[index],
+        newComponents[index - 1],
+      ];
+      return newComponents;
+    });
+  }
+
+  function moveComponentDown(index) {
+    setAllUserComponents((prev) => {
+      if (index === prev.length - 1) return prev; // Can't move the last item down
+      const newComponents = [...prev];
+      [newComponents[index + 1], newComponents[index]] = [
+        newComponents[index],
+        newComponents[index + 1],
+      ];
+      return newComponents;
+    });
+  }
+
   async function submitRegisterForm() {
     setLoading(true);
     try {
@@ -82,14 +106,14 @@ const AddForm = () => {
   // console.log(JSON.stringify(alluserComponents));
   return (
     <div className="flex justify-center text-white bg-black">
-      <div className="p-[1rem]">
+      <div className="p-[1rem] flex flex-col items-center">
         <h3
           className="px-[1rem] font-bold text-3xl"
           style={{ fontFamily: "Outfit" }}
         >
           Registration form
         </h3>
-        <div className="p-[1rem] flex flex-col gap-[0.5rem]">
+        <div className="p-[1rem] flex flex-col gap-[0.5rem] mr-[1.2rem]">
           <h3>Your Event Name</h3>
           <div className="relative">
             <input
@@ -108,7 +132,7 @@ const AddForm = () => {
             </div>
           </div>
         </div>
-        <div className="p-[1rem] flex flex-col gap-[0.5rem]">
+        <div className="p-[1rem] flex flex-col gap-[0.5rem] mr-[1.2rem]">
           <h3>
             {formType == "AllActivities" ? "Activity" : "Event"} description
           </h3>
@@ -130,29 +154,49 @@ const AddForm = () => {
           </div>
         </div>
 
-        <div className="p-[1rem] w-[30rem]">
+        <div className="p-[1rem] w-[30rem] flex flex-col items-center">
           <h3 className="pb-[1rem] font-semibold">Add inputs for user</h3>
           <div
             className={`/px-[1rem] ${
               alluserComponents[0] ? "mb-[1.5rem]" : ""
             } flex flex-col gap-[0.8rem]`}
           >
-            {alluserComponents.map((el) => {
+            {alluserComponents.map((el, index) => {
               if (el.type == "text") {
                 return (
                   <>
-                    <div className="flex gap-[1rem] items-end">
-                      <div className="flex flex-col gap-[0rem] py-[0.5rem]">
-                        {/* <h3
-                      contentEditable
-                      className="w-[26rem] outline-none focus:border-white focus:outline-[1px] focus:outline-solid focus:outline-white pr-[0.5rem] rounded-sm"
-                    >
-                      {el?.inputName}
-                    </h3> */}
+                    <div className="flex gap-[0.5rem] w-max items-center">
+                      <div className="flex flex-col gap-[0.2rem]">
+                        <button
+                          onClick={() => moveComponentUp(index)}
+                          disabled={index === 0}
+                        >
+                          <img
+                            style={{
+                              rotate: "180deg",
+                              filter: "invert(1)",
+                              width: "2rem",
+                            }}
+                            src="/assets/down-arrow.png"
+                            alt=""
+                          />
+                        </button>
+                        <button
+                          onClick={() => moveComponentDown(index)}
+                          disabled={index === alluserComponents.length - 1}
+                        >
+                          <img
+                            style={{ filter: "invert(1)", width: "2rem" }}
+                            src="/assets/down-arrow.png"
+                            alt=""
+                          />
+                        </button>
+                      </div>
+                      <div className="flex flex-col gap-[0.5rem]">
                         <input
                           type="text"
-                          placeholder={el?.inputNamePlaceholder}
                           value={el?.inputName || ""}
+                          placeholder={el?.inputNamePlaceholder}
                           onChange={(curel) => {
                             setAllUserComponents((prev) =>
                               prev.map((ell) =>
@@ -164,54 +208,431 @@ const AddForm = () => {
                           }}
                           className="/py-[0.5rem] /px-[1rem] pl-[0.2rem] text-white w-[26rem] rounded-md bg-transparent"
                         />
-                        <div className="flex gap-[0.5rem] justify-center items-center  w-[30rem]">
-                          <input
-                            type="text"
-                            // placeholder={el?.placeholder}
-                            placeholder="Text Placeholder (Editable)"
-                            value={el?.placeholder || ""}
-                            onChange={(curel) => {
-                              setAllUserComponents((prev) =>
-                                prev.map((ell) =>
-                                  ell.currentId == el.currentId
-                                    ? {
-                                        ...ell,
-                                        placeholder: curel.target.value,
-                                      }
-                                    : ell
-                                )
-                              );
-                            }}
-                            className="py-[0.5rem] px-[1rem] text-black w-[26rem] rounded-md"
-                          />
+                        <div className="flex gap-[0.5rem] justify-center items-center w-[30rem]">
+                          <div className="flex gap-[0.5rem]">
+                            <textarea
+                              type="text"
+                              value={el?.placeholder || ""}
+                              onChange={(curel) => {
+                                setAllUserComponents((prev) =>
+                                  prev.map((ell) =>
+                                    ell.currentId == el.currentId
+                                      ? {
+                                          ...ell,
+                                          placeholder:
+                                            curel.target.value.includes(",")
+                                              ? curel.target.value.split(",")
+                                              : [curel.target.value],
+                                        }
+                                      : ell
+                                  )
+                                );
+                              }}
+                              className="text-black rounded-md w-[26rem] px-[1rem] py-[0.5rem]"
+                              placeholder="Option values (',' separated values)"
+                            />
+                          </div>
                           <div
                             onClick={() => deleteInput(el?.currentId)}
                             className="/bg-red-700 hover:scale-110 cursor-pointer rounded-full /w-[3rem] flex items-center justify-center /h-[3rem] p-[0.5rem] transition-all duration-200"
                           >
                             <img
                               src="/assets/bin.png"
-                              className="w-[2.5rem] /mb-[0.2rem] "
+                              className="w-[2.5rem] /mb-[0.2rem]"
                             />
                           </div>
                         </div>
+                        <div className="flex gap-[0.5rem] items-center">
+                          <div className="flex items-center gap-[0.5rem]">
+                            <input
+                              type="checkbox"
+                              checked={el?.required || false}
+                              onChange={() => {
+                                setAllUserComponents((prev) =>
+                                  prev.map((ell) =>
+                                    ell.currentId == el.currentId
+                                      ? { ...ell, required: !ell.required }
+                                      : ell
+                                  )
+                                );
+                              }}
+                            />
+                            <label className="text-white">Required</label>
+                          </div>
+                          <div className="w-1 h-1 bg-green-400 rounded-full"></div>
+                          <div className="text-green-400 text-sm">
+                            {el.type[0].toUpperCase() +
+                              el.type.split("").splice(1).join("") +
+                              " input"}
+                          </div>
+                        </div>
                       </div>
-                      <div></div>
                     </div>
                   </>
                 );
               } else if (el.type == "radio") {
                 return (
                   <>
+                    <div className="flex gap-[0.5rem] w-max items-center">
+                      <div className="flex flex-col gap-[0.2rem]">
+                        <button
+                          onClick={() => moveComponentUp(index)}
+                          disabled={index === 0}
+                        >
+                          <img
+                            style={{
+                              rotate: "180deg",
+                              filter: "invert(1)",
+                              width: "2rem",
+                            }}
+                            src="/assets/down-arrow.png"
+                            alt=""
+                          />
+                        </button>
+                        <button
+                          onClick={() => moveComponentDown(index)}
+                          disabled={index === alluserComponents.length - 1}
+                        >
+                          <img
+                            style={{ filter: "invert(1)", width: "2rem" }}
+                            src="/assets/down-arrow.png"
+                            alt=""
+                          />
+                        </button>
+                      </div>
+                      <div className="flex flex-col gap-[0.5rem]">
+                        <input
+                          type="text"
+                          value={el?.inputName || ""}
+                          placeholder={el?.inputNamePlaceholder}
+                          onChange={(curel) => {
+                            setAllUserComponents((prev) =>
+                              prev.map((ell) =>
+                                ell.currentId == el.currentId
+                                  ? { ...ell, inputName: curel.target.value }
+                                  : ell
+                              )
+                            );
+                          }}
+                          className="/py-[0.5rem] /px-[1rem] pl-[0.2rem] text-white w-[26rem] rounded-md bg-transparent"
+                        />
+                        <div className="flex gap-[0.5rem] justify-center items-center w-[30rem]">
+                          <div className="flex gap-[0.5rem]">
+                            <textarea
+                              type="text"
+                              value={el?.placeholder || ""}
+                              onChange={(curel) => {
+                                setAllUserComponents((prev) =>
+                                  prev.map((ell) =>
+                                    ell.currentId == el.currentId
+                                      ? {
+                                          ...ell,
+                                          placeholder:
+                                            curel.target.value.includes(",")
+                                              ? curel.target.value.split(",")
+                                              : [curel.target.value],
+                                        }
+                                      : ell
+                                  )
+                                );
+                              }}
+                              className="text-black rounded-md w-[26rem] px-[1rem] py-[0.5rem]"
+                              placeholder="Radio Option values (',' separated values)"
+                            />
+                          </div>
+                          <div
+                            onClick={() => deleteInput(el?.currentId)}
+                            className="/bg-red-700 hover:scale-110 cursor-pointer rounded-full /w-[3rem] flex items-center justify-center /h-[3rem] p-[0.5rem] transition-all duration-200"
+                          >
+                            <img
+                              src="/assets/bin.png"
+                              className="w-[2.5rem] /mb-[0.2rem]"
+                            />
+                          </div>
+                        </div>
+                        <div className="flex gap-[0.5rem] items-center">
+                          <div className="flex items-center gap-[0.5rem]">
+                            <input
+                              type="checkbox"
+                              checked={el?.required || false}
+                              onChange={() => {
+                                setAllUserComponents((prev) =>
+                                  prev.map((ell) =>
+                                    ell.currentId == el.currentId
+                                      ? { ...ell, required: !ell.required }
+                                      : ell
+                                  )
+                                );
+                              }}
+                            />
+                            <label className="text-white">Required</label>
+                          </div>
+                          <div className="w-1 h-1 bg-green-400 rounded-full"></div>
+                          <div className="text-green-400 text-sm">
+                            {el.type[0].toUpperCase() +
+                              el.type.split("").splice(1).join("") +
+                              " input"}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                );
+              } else if (el.type == "select") {
+                return (
+                  <>
+                    <div className="flex gap-[0.5rem] w-max items-center">
+                      <div className="flex flex-col gap-[0.2rem]">
+                        <button
+                          onClick={() => moveComponentUp(index)}
+                          disabled={index === 0}
+                        >
+                          <img
+                            style={{
+                              rotate: "180deg",
+                              filter: "invert(1)",
+                              width: "2rem",
+                            }}
+                            src="/assets/down-arrow.png"
+                            alt=""
+                          />
+                        </button>
+                        <button
+                          onClick={() => moveComponentDown(index)}
+                          disabled={index === alluserComponents.length - 1}
+                        >
+                          <img
+                            style={{ filter: "invert(1)", width: "2rem" }}
+                            src="/assets/down-arrow.png"
+                            alt=""
+                          />
+                        </button>
+                      </div>
+                      <div className="flex flex-col gap-[0.5rem]">
+                        <input
+                          type="text"
+                          value={el?.inputName || ""}
+                          placeholder={el?.inputNamePlaceholder}
+                          onChange={(curel) => {
+                            setAllUserComponents((prev) =>
+                              prev.map((ell) =>
+                                ell.currentId == el.currentId
+                                  ? {
+                                      ...ell,
+                                      inputName: curel.target.value,
+                                    }
+                                  : ell
+                              )
+                            );
+                          }}
+                          className="/py-[0.5rem] /px-[1rem] pl-[0.2rem] text-white w-[26rem] rounded-md bg-transparent"
+                        />
+                        <div className="flex gap-[0.5rem] justify-center items-center w-[30rem]">
+                          <div className="flex gap-[0.5rem]">
+                            <textarea
+                              type="text"
+                              value={el?.placeholder || ""}
+                              onChange={(curel) => {
+                                setAllUserComponents((prev) =>
+                                  prev.map((ell) =>
+                                    ell.currentId == el.currentId
+                                      ? {
+                                          ...ell,
+                                          placeholder:
+                                            curel.target.value.includes(",")
+                                              ? curel.target.value.split(",")
+                                              : [curel.target.value],
+                                        }
+                                      : ell
+                                  )
+                                );
+                              }}
+                              className="text-black rounded-md w-[26rem] px-[1rem] py-[0.5rem]"
+                              placeholder="Option values (',' separated values)"
+                            />
+                          </div>
+                          <div
+                            onClick={() => deleteInput(el?.currentId)}
+                            className="/bg-red-700 hover:scale-110 cursor-pointer rounded-full /w-[3rem] flex items-center justify-center /h-[3rem] p-[0.5rem] transition-all duration-200"
+                          >
+                            <img
+                              src="/assets/bin.png"
+                              className="w-[2.5rem] /mb-[0.2rem]"
+                            />
+                          </div>
+                        </div>
+                        <div className="flex gap-[0.5rem] items-center">
+                          <div className="flex items-center gap-[0.5rem]">
+                            <input
+                              type="checkbox"
+                              checked={el?.required || false}
+                              onChange={() => {
+                                setAllUserComponents((prev) =>
+                                  prev.map((ell) =>
+                                    ell.currentId == el.currentId
+                                      ? { ...ell, required: !ell.required }
+                                      : ell
+                                  )
+                                );
+                              }}
+                            />
+                            <label className="text-white">Required</label>
+                          </div>
+                          <div className="w-1 h-1 bg-green-400 rounded-full"></div>
+                          <div className="text-green-400 text-sm">
+                            {el.type[0].toUpperCase() +
+                              el.type.split("").splice(1).join("") +
+                              " input"}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                );
+              } else if (el.type == "checkbox") {
+                return (
+                  <>
+                    <div className="flex gap-[0.5rem] w-max items-center">
+                      <div className="flex flex-col gap-[0.2rem]">
+                        <button
+                          onClick={() => moveComponentUp(index)}
+                          disabled={index === 0}
+                        >
+                          <img
+                            style={{
+                              rotate: "180deg",
+                              filter: "invert(1)",
+                              width: "2rem",
+                            }}
+                            src="/assets/down-arrow.png"
+                            alt=""
+                          />
+                        </button>
+                        <button
+                          onClick={() => moveComponentDown(index)}
+                          disabled={index === alluserComponents.length - 1}
+                        >
+                          <img
+                            style={{ filter: "invert(1)", width: "2rem" }}
+                            src="/assets/down-arrow.png"
+                            alt=""
+                          />
+                        </button>
+                      </div>
+                      <div className="flex flex-col gap-[0.5rem]">
+                        <input
+                          type="text"
+                          value={el?.inputName || ""}
+                          placeholder={el?.inputNamePlaceholder}
+                          onChange={(curel) => {
+                            setAllUserComponents((prev) =>
+                              prev.map((ell) =>
+                                ell.currentId == el.currentId
+                                  ? {
+                                      ...ell,
+                                      inputName: curel.target.value,
+                                    }
+                                  : ell
+                              )
+                            );
+                          }}
+                          className="/py-[0.5rem] /px-[1rem] pl-[0.2rem] text-white w-[26rem] rounded-md bg-transparent"
+                        />
+                        <div className="flex gap-[0.5rem] justify-center items-center w-[30rem]">
+                          <div className="flex gap-[0.5rem]">
+                            <textarea
+                              type="text"
+                              value={el?.placeholder || ""}
+                              onChange={(curel) => {
+                                setAllUserComponents((prev) =>
+                                  prev.map((ell) =>
+                                    ell.currentId == el.currentId
+                                      ? {
+                                          ...ell,
+                                          placeholder:
+                                            curel.target.value.includes(",")
+                                              ? curel.target.value.split(",")
+                                              : [curel.target.value],
+                                        }
+                                      : ell
+                                  )
+                                );
+                              }}
+                              className="text-black rounded-md w-[26rem] px-[1rem] py-[0.5rem]"
+                              placeholder="Option values (',' separated values)"
+                            />
+                          </div>
+                          <div
+                            onClick={() => deleteInput(el?.currentId)}
+                            className="/bg-red-700 hover:scale-110 cursor-pointer rounded-full /w-[3rem] flex items-center justify-center /h-[3rem] p-[0.5rem] transition-all duration-200"
+                          >
+                            <img
+                              src="/assets/bin.png"
+                              className="w-[2.5rem] /mb-[0.2rem]"
+                            />
+                          </div>
+                        </div>
+                        <div className="flex gap-[0.5rem] items-center">
+                          <div className="flex items-center gap-[0.5rem]">
+                            <input
+                              type="checkbox"
+                              checked={el?.required || false}
+                              onChange={() => {
+                                setAllUserComponents((prev) =>
+                                  prev.map((ell) =>
+                                    ell.currentId == el.currentId
+                                      ? { ...ell, required: !ell.required }
+                                      : ell
+                                  )
+                                );
+                              }}
+                            />
+                            <label className="text-white">Required</label>
+                          </div>
+                          <div className="w-1 h-1 bg-green-400 rounded-full"></div>
+                          <div className="text-green-400 text-sm">
+                            {el.type[0].toUpperCase() +
+                              el.type.split("").splice(1).join("") +
+                              " input"}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                );
+              }
+              return (
+                <>
+                  <div className="flex gap-[0.5rem] w-max items-center">
+                    <div className="flex flex-col gap-[0.2rem]">
+                      <button
+                        onClick={() => moveComponentUp(index)}
+                        disabled={index === 0}
+                      >
+                        <img
+                          style={{
+                            rotate: "180deg",
+                            filter: "invert(1)",
+                            width: "2rem",
+                          }}
+                          src="/assets/down-arrow.png"
+                          alt=""
+                        />
+                      </button>
+                      <button
+                        onClick={() => moveComponentDown(index)}
+                        disabled={index === alluserComponents.length - 1}
+                      >
+                        <img
+                          style={{ filter: "invert(1)", width: "2rem" }}
+                          src="/assets/down-arrow.png"
+                          alt=""
+                        />
+                      </button>
+                    </div>
                     <div className="flex flex-col gap-[0.5rem]">
-                      {/* <h3
-                      contentEditable
-                      className="w-[26rem] outline-none focus:border-white focus:outline-[1px] focus:outline-solid focus:outline-white pr-[0.5rem] rounded-sm"
-                    >
-                      {el?.inputName}
-                    </h3> */}
-
                       <input
-                        type="text"
+                        type={"text"}
                         value={el?.inputName || ""}
                         placeholder={el?.inputNamePlaceholder}
                         onChange={(curel) => {
@@ -225,10 +646,10 @@ const AddForm = () => {
                         }}
                         className="/py-[0.5rem] /px-[1rem] pl-[0.2rem] text-white w-[26rem] rounded-md bg-transparent"
                       />
-                      <div className="flex gap-[0.5rem] justify-center items-center  w-[30rem]">
+                      <div className="flex gap-[0.5rem] justify-center items-center w-[30rem]">
                         <div className="flex gap-[0.5rem]">
-                          <textarea
-                            type="text"
+                          <input
+                            type={"text"}
                             value={el?.placeholder || ""}
                             onChange={(curel) => {
                               setAllUserComponents((prev) =>
@@ -245,126 +666,8 @@ const AddForm = () => {
                                 )
                               );
                             }}
-                            className=" text-black  rounded-md w-[26rem] px-[1rem] py-[0.5rem]"
-                            placeholder="Radio button values (',' seperated values)"
-                          />
-                        </div>
-                        <div
-                          onClick={() => deleteInput(el?.currentId)}
-                          className="/bg-red-700 hover:scale-110 cursor-pointer rounded-full /w-[3rem] flex items-center justify-center /h-[3rem] p-[0.5rem] transition-all duration-200"
-                        >
-                          <img
-                            src="/assets/bin.png"
-                            className="w-[2.5rem] /mb-[0.2rem] "
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                );
-              } else if (el.type == "select") {
-                return (
-                  <>
-                    <div className="flex flex-col gap-[0.5rem]">
-                      <input
-                        type="text"
-                        value={el?.inputName || ""}
-                        placeholder={el?.inputNamePlaceholder}
-                        onChange={(curel) => {
-                          setAllUserComponents((prev) =>
-                            prev.map((ell) =>
-                              ell.currentId == el.currentId
-                                ? {
-                                    ...ell,
-                                    inputName: curel.target.value,
-                                  }
-                                : ell
-                            )
-                          );
-                        }}
-                        className="/py-[0.5rem] /px-[1rem] pl-[0.2rem] text-white w-[26rem] rounded-md bg-transparent"
-                      />
-                      <div className="flex gap-[0.5rem] justify-center items-center  w-[30rem]">
-                        <div className="flex gap-[0.5rem]">
-                          <textarea
-                            type="text"
-                            value={el?.placeholder || ""}
-                            onChange={(curel) => {
-                              setAllUserComponents((prev) =>
-                                prev.map((ell) =>
-                                  ell.currentId == el.currentId
-                                    ? {
-                                        ...ell,
-                                        placeholder:
-                                          curel.target.value.includes(",")
-                                            ? curel.target.value.split(",")
-                                            : [curel.target.value],
-                                      }
-                                    : ell
-                                )
-                              );
-                            }}
-                            className=" text-black  rounded-md w-[26rem] px-[1rem] py-[0.5rem]"
-                            placeholder="Select option values (',' seperated values)"
-                          />
-                        </div>
-                        <div
-                          onClick={() => deleteInput(el?.currentId)}
-                          className="/bg-red-700 hover:scale-110 cursor-pointer rounded-full /w-[3rem] flex items-center justify-center /h-[3rem] p-[0.5rem] transition-all duration-200"
-                        >
-                          <img
-                            src="/assets/bin.png"
-                            className="w-[2.5rem] /mb-[0.2rem] "
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                );
-              } else if (el.type == "checkbox") {
-                return (
-                  <>
-                    <div className="flex flex-col gap-[0.5rem]">
-                      <input
-                        type="text"
-                        value={el?.inputName || ""}
-                        placeholder={el?.inputNamePlaceholder}
-                        onChange={(curel) => {
-                          setAllUserComponents((prev) =>
-                            prev.map((ell) =>
-                              ell.currentId == el.currentId
-                                ? {
-                                    ...ell,
-                                    inputName: curel.target.value,
-                                  }
-                                : ell
-                            )
-                          );
-                        }}
-                        className="/py-[0.5rem] /px-[1rem] pl-[0.2rem] text-white w-[26rem] rounded-md bg-transparent"
-                      />
-                      <div className="flex gap-[0.5rem] justify-center items-center  w-[30rem]">
-                        <div className="flex gap-[0.5rem]">
-                          <textarea
-                            type="text"
                             className="text-black rounded-md w-[26rem] px-[1rem] py-[0.5rem]"
-                            placeholder="Checkbox option values (',' seperated values)"
-                            value={el?.placeholder || ""}
-                            onChange={(curel) => {
-                              setAllUserComponents((prev) =>
-                                prev.map((ell) =>
-                                  ell.currentId == el.currentId
-                                    ? {
-                                        ...ell,
-                                        placeholder:
-                                          curel.target.value.includes(",")
-                                            ? curel.target.value.split(",")
-                                            : [curel.target.value],
-                                      }
-                                    : ell
-                                )
-                              );
-                            }}
+                            placeholder="Option values (',' separated values)"
                           />
                         </div>
                         <div
@@ -373,14 +676,38 @@ const AddForm = () => {
                         >
                           <img
                             src="/assets/bin.png"
-                            className="w-[2.5rem] /mb-[0.2rem] "
+                            className="w-[2.5rem] /mb-[0.2rem]"
                           />
                         </div>
                       </div>
+                      <div className="flex gap-[0.5rem] items-center">
+                        <div className="flex items-center gap-[0.5rem]">
+                          <input
+                            type="checkbox"
+                            checked={el?.required || false}
+                            onChange={() => {
+                              setAllUserComponents((prev) =>
+                                prev.map((ell) =>
+                                  ell.currentId == el.currentId
+                                    ? { ...ell, required: !ell.required }
+                                    : ell
+                                )
+                              );
+                            }}
+                          />
+                          <label className="text-white">Required</label>
+                        </div>
+                        <div className="w-1 h-1 bg-green-400 rounded-full"></div>
+                        <div className="text-green-400 text-sm">
+                          {el.type[0].toUpperCase() +
+                            el.type.split("").splice(1).join("") +
+                            " input"}
+                        </div>
+                      </div>
                     </div>
-                  </>
-                );
-              }
+                  </div>
+                </>
+              );
             })}
           </div>
           <div className="relative w-[26rem]">
@@ -400,7 +727,7 @@ const AddForm = () => {
                   el.currentTarget.nextElementSibling.style.transform =
                     "translateY(-50%) rotate(180deg)";
                   el.currentTarget.parentElement.nextElementSibling.nextElementSibling.style.height =
-                    "222.6px";
+                    "452.750px";
                   el.currentTarget.parentElement.nextElementSibling.style.opacity = 1;
                 }
               }}
@@ -463,6 +790,13 @@ const AddForm = () => {
                 // placeholder: "Checkbox option values (',' seperated values)",
                 currentId: Math.random() * 99999,
               },
+              {
+                type: "link",
+                inputName: "",
+                inputNamePlaceholder: "Example link input title (Editable)",
+                // placeholder: "Checkbox option values (',' seperated values)",
+                currentId: Math.random() * 99999,
+              },
             ].map((el) => (
               <div
                 key={Math.floor(Math.random() * 999) + el.type}
@@ -471,7 +805,8 @@ const AddForm = () => {
                 }}
                 className="text-center py-[0.8rem] px-[1rem] hover:bg-slate-800 transition-all duration-200 cursor-pointer"
               >
-                {el.type}
+                {el.type[0].toUpperCase() +
+                  el.type.split("").splice(1).join("")}
               </div>
             ))}
           </div>
