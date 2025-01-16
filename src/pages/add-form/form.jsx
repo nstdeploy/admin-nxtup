@@ -595,6 +595,27 @@ const AddForm = () => {
                               el.type.split("").splice(1).join("") +
                               " input"}
                           </div>
+                          <div className="w-1 h-1 bg-green-400 rounded-full"></div>
+                          <div className="flex gap-[0.5rem] items-center">
+                            <div className="text-green-400 text-sm">Max:</div>
+                            <input
+                              type="text"
+                              value={el?.maxValue || ""}
+                              onChange={(curel) => {
+                                setAllUserComponents((prev) =>
+                                  prev.map((ell) =>
+                                    ell.currentId == el.currentId
+                                      ? {
+                                          ...ell,
+                                          maxValue: curel.target.value,
+                                        }
+                                      : ell
+                                  )
+                                );
+                              }}
+                              className="w-[1.7rem] h-[1rem] text-black p-1"
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
