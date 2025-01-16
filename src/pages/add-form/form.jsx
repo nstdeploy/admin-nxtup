@@ -14,6 +14,7 @@ const AddForm = () => {
   const [desc, setDesc] = useState("");
   const [alluserComponents, setAllUserComponents] = useState([]);
   const [formType, setFormType] = useState(type || "AllEvents");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -40,6 +41,7 @@ const AddForm = () => {
   }
 
   async function submitRegisterForm() {
+    setLoading(true);
     try {
       if (alluserComponents && alluserComponents[0]) {
         const { data: axres } = await axios.post(
@@ -62,6 +64,8 @@ const AddForm = () => {
       }
     } catch (error) {
       toast.success(error.response.data.message);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -443,8 +447,10 @@ const AddForm = () => {
           <button
             className="px-[1rem] py-[0.8rem] bg-slate-900 text-white w-[26rem] rounded-tl-md rounded-tr-md cursor-pointer mt-[1rem]"
             onClick={submitRegisterForm}
+            disabled={loading}
           >
             Submit
+            {loading ? "Submitting..." : "Submit"}
           </button>
           <button
             className="px-[1rem] py-[0.8rem] bg-slate-900 text-white w-[26rem] rounded-tl-md rounded-tr-md cursor-pointer mt-[1rem]"
