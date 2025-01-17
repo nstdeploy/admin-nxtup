@@ -9,6 +9,7 @@ function Registrations() {
 
   const [studentData, setStudentData] = useState([]);
   const [eventKeys, seteventKeys] = useState([]);
+  const [AllEventKeys, setAllEventKeys] = useState({});
 
   useEffect(() => {
     const getStudents = async () => {
@@ -21,6 +22,7 @@ function Registrations() {
         const Data = response.data.data;
         console.log(Data);
         setStudentData(Data);
+        setAllEventKeys(Data[0]);
         seteventKeys(Object.keys(Data[0]["studentDetails"]));
       } catch (error) {
         console.error("Error fetching events:", error);
@@ -44,7 +46,19 @@ function Registrations() {
   return (
     <div className="text-white">
       <LoginNav />
-
+      <div className="flex justify-end items-center mr-[1rem]">
+        <button
+          className="px-[1rem] py-[0.8rem] bg-slate-900 text-white w-[12rem] rounded-tl-md rounded-tr-md cursor-pointer mt-[1rem]"
+          onClick={() =>
+            window.open(
+              "https://server-admin-nxtup-r754.onrender.com/api/getAllEventRegistedUsers?id=" +
+                AllEventKeys.eventId
+            )
+          }
+        >
+          Export as CSV
+        </button>
+      </div>
       <div className="flex items-center justify-center mt-5">
         <div className="relative flex flex-col w-[98vw] h-full overflow-scroll text-slate-300 bg-slate-800 shadow-md rounded-lg bg-clip-border">
           <table className="w-full text-left table-auto">
@@ -71,7 +85,10 @@ function Registrations() {
                         } w-[25%]`}
                       >
                         <div className="flex justify-center">
-                          <span className="text-sm text-slate-100 font-semibold truncate">
+                          <span
+                            className="text-sm text-slate-100 font-semibold /truncate /line-clamp-1 h-[20rem] overflow-y-scroll"
+                            style={{ wordBreak: "break-all" }}
+                          >
                             {student.studentDetails[key] || "No Value"}
                           </span>
                         </div>
