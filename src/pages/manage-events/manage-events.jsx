@@ -10,10 +10,11 @@ function ManageEvents() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) {
-      navigate("/login");
+      navigate("/");
     }
-  }, []);
+  }, [navigate]);
 
   const [events, setEvents] = useState([]);
 

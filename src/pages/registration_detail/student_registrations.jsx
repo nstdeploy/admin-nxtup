@@ -1,11 +1,19 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import LoginNav from "../../components/LoginNav";
 import Loader from "../../components/Loader";
 
 function Registrations() {
   const { id } = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   const [studentData, setStudentData] = useState([]);
   const [eventKeys, seteventKeys] = useState([]);
