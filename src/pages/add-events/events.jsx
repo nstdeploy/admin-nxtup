@@ -5,6 +5,14 @@ import { toast } from "react-toastify";
 
 const AddEvents = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      navigate("/");
+    }
+  }, [navigate]);
+
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const [eventData, setEventData] = useState({
