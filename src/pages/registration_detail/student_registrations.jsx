@@ -85,7 +85,10 @@ function Registrations() {
                         } w-[25%]`}
                       >
                         <div className="flex justify-center">
-                          <span className="text-sm text-slate-100 font-semibold truncate">
+                          <span
+                            className="text-sm text-slate-100 font-semibold /truncate /line-clamp-1 h-[20rem] overflow-y-scroll"
+                            style={{ wordBreak: "break-all" }}
+                          >
                             {student.studentDetails[key] || "No Value"}
                           </span>
                         </div>
