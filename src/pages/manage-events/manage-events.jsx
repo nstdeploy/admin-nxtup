@@ -35,7 +35,6 @@ function ManageEvents() {
     getEvents();
   }, []);
 
-
   const EventName = [
     "Event Title",
     "Start",
@@ -49,14 +48,12 @@ function ManageEvents() {
 
   if (events.length === 0) {
     return (
-    <>
-        <LoginNav/>
-        <Loader/>   
-    </>
-    )
-}
-
-
+      <>
+        <LoginNav />
+        <Loader />
+      </>
+    );
+  }
 
   return (
     <>
@@ -68,8 +65,8 @@ function ManageEvents() {
               <thead>
                 <tr>
                   {EventName.map((name) => (
-                    <th className="p-4 border-b border-slate-600 bg-slate-700">
-                      <p className="text-sm font-normal leading-none text-slate-300 text-center">
+                    <th className="p-4 border-b border-slate-600 bg-slate-700 ">
+                      <p className="text-sm font-normal leading-none text-slate-300 text-center line-clamp-1">
                         {name}
                       </p>
                     </th>
@@ -81,7 +78,7 @@ function ManageEvents() {
                   <tr className="hover:bg-slate-700 ">
                     <td className="p-4 border-b border-slate-700 bg-slate-900 w-[25%]">
                       <div className="flex justify-between">
-                        <span className="text-sm text-slate-100 font-semibold ">
+                        <span className="text-sm text-slate-100 font-semibold truncate line-clamp-1">
                           {event.Title}
                         </span>
                         <div className="flex">
@@ -133,7 +130,14 @@ function ManageEvents() {
                     <td className="p-4 border-b border-slate-700 bg-slate-800 w-[10%]">
                       <div className="text-sm text-slate-300  text-center flex items-center justify-center">
                         <span className="pr-3">{event.Registered}</span>
-                        <img src="assets/next.png" alt="See more.." className="h-6 w-6 bg-white rounded-full cursor-pointer" onClick={() => {navigate(`/events/${event._id}`)}}/>
+                        <img
+                          src="assets/next.png"
+                          alt="See more.."
+                          className="h-6 w-6 bg-white rounded-full cursor-pointer"
+                          onClick={() => {
+                            navigate(`/events/${event._id}`);
+                          }}
+                        />
                       </div>
                     </td>
                     <td className="p-4 border border-white bg-slate-900 w-[10%]">
