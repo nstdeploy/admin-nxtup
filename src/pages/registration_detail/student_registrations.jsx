@@ -18,8 +18,10 @@ function Registrations() {
   const [studentData, setStudentData] = useState([]);
   const [eventKeys, seteventKeys] = useState([]);
   const [AllEventKeys, setAllEventKeys] = useState({});
+  const [isLoading, setisLoading] = useState(false);
 
   useEffect(() => {
+    setisLoading(true)
     const getStudents = async () => {
       try {
         const response = await axios.post(
@@ -35,12 +37,15 @@ function Registrations() {
       } catch (error) {
         console.error("Error fetching events:", error);
       }
+      finally {
+        setisLoading(false);
+      }
     };
 
     getStudents();
   }, [id]);
 
-  if (studentData.length === 0) {
+  if (isLoading) {
     return (
       <>
         <LoginNav />
