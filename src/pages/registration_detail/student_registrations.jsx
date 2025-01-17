@@ -69,43 +69,42 @@ function Registrations() {
       </div>
       <div className="flex items-center justify-center mt-5">
         <div className="relative flex flex-col w-[98vw] h-full overflow-scroll text-slate-300 bg-slate-800 shadow-md rounded-lg bg-clip-border">
-        <table className="w-full text-left table-auto">
-  <thead>
-    <tr className="">
-      {eventKeys.map((name) => (
-        <th key={name} className="p-4 border-b border-slate-600 bg-slate-700">
-          <p className="text-sm font-normal leading-none text-slate-300 text-center truncate">
-            {name}
-          </p>
-        </th>
-      ))}
-    </tr>
-  </thead>
-  <tbody>
-    {studentData.map((student, rowIndex) => (
-      <tr key={rowIndex} className="hover:bg-slate-700">
-        {eventKeys.map((key, index) => (
-          <td
-            key={index}
-            className={`p-4 border-b border-slate-700 ${
-              index % 2 === 0 ? "bg-slate-900" : "bg-slate-800"
-            } w-[25%]`}
-          >
-            <div className="flex justify-center">
-              <span
-                className="text-sm text-slate-100 font-semibold /truncate /line-clamp-1 h-[20rem] overflow-y-scroll"
-                style={{ wordBreak: "break-all" }}
-              >
-                {student.studentDetails?.[key] || "No Value"}
-              </span>
-            </div>
-          </td>
-        ))}
-      </tr>
-    ))}
-  </tbody>
-</table>
-
+          <table className="w-full text-left table-auto">
+            <thead>
+              <tr>
+                {eventKeys.map((name) => (
+                  <th className="p-4 border-b border-slate-600 bg-slate-700">
+                    <p className="text-sm font-normal leading-none text-slate-300 text-center truncate">
+                      {name}
+                    </p>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {studentData.map((student) => (
+                <tr className="hover:bg-slate-700 ">
+                  {eventKeys.map((key, index) => (
+                    <td
+                      key={key}
+                      className={`p-4 border-b border-slate-700 ${
+                        index % 2 === 0 ? "bg-slate-900" : "bg-slate-800"
+                      } w-[25%]`}
+                    >
+                      <div className="flex justify-center">
+                        <span
+                          className="text-sm text-slate-100 font-semibold /truncate /line-clamp-1 h-[20rem] overflow-y-scroll"
+                          style={{ wordBreak: "break-all" }}
+                        >
+                          {student.studentDetails[key] || "No Value"}
+                        </span>
+                      </div>
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
