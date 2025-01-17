@@ -51,6 +51,7 @@ function Registrations() {
         <LoginNav />
         <div className="mt-16">
           <Loader />
+          
         </div>
       </>
     );
@@ -58,6 +59,8 @@ function Registrations() {
 
   return (
     <div className="text-white">
+      {studentData.length === 0 ? <><LoginNav/><h1 className="text-white text-center mt-16 text-3xl">No Registrations as of now !</h1></> : 
+        <>
       <LoginNav />
       <div className="flex justify-end items-center mr-[1rem]">
         <button
@@ -65,10 +68,10 @@ function Registrations() {
           onClick={() =>
             window.open(
               "https://server-admin-nxtup-r754.onrender.com/api/getAllEventRegistedUsers?id=" +
-                AllEventKeys.eventId
+              AllEventKeys.eventId
             )
           }
-        >
+          >
           Export as CSV
         </button>
       </div>
@@ -91,16 +94,16 @@ function Registrations() {
                 <tr className="hover:bg-slate-700 ">
                   {eventKeys.map((key, index) => (
                     <td
-                      key={key}
-                      className={`p-4 border-b border-slate-700 ${
-                        index % 2 === 0 ? "bg-slate-900" : "bg-slate-800"
-                      } w-[25%]`}
+                    key={key}
+                    className={`p-4 border-b border-slate-700 ${
+                      index % 2 === 0 ? "bg-slate-900" : "bg-slate-800"
+                    } w-[25%]`}
                     >
                       <div className="flex justify-center">
                         <span
                           className="text-sm text-slate-100 font-semibold /truncate /line-clamp-1 h-[20rem] overflow-y-scroll"
                           style={{ wordBreak: "break-all" }}
-                        >
+                          >
                           {student.studentDetails[key] || "No Value"}
                         </span>
                       </div>
@@ -112,6 +115,8 @@ function Registrations() {
           </table>
         </div>
       </div>
+              </>
+            }
     </div>
   );
 }
